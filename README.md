@@ -1,5 +1,7 @@
 # Codex Workflow Builder
 
+![Codex Workflow Builder social cover](assets/social-cover.png)
+
 把重复任务、短视频剪辑流程、HyperFrames 视频生产管线，整理成 Codex 可以反复执行的 Skill。
 
 这个仓库来自三篇 X 长文的方法论蒸馏，最终沉淀为一个可安装的 Codex Skill：`codex-workflow-builder`。它不是普通教程摘要，而是一个面向真实执行的工作流设计器：当你有一个模糊但反复发生的任务时，它会帮你把目标、输入、输出、目录、步骤、检查点、封装方式全部整理清楚。
