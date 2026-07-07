@@ -270,7 +270,7 @@ codex-workflow-builder/
 本地校验命令：
 
 ```bash
-python3 /Users/g90/.codex/skills/.system/skill-creator/scripts/quick_validate.py ~/.codex/skills/codex-workflow-builder
+python3 "$HOME/.codex/skills/.system/skill-creator/scripts/quick_validate.py" "$HOME/.codex/skills/codex-workflow-builder"
 jq empty ~/.codex/skills/codex-workflow-builder/test-prompts.json
 ```
 
