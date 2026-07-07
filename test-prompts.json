@@ -1,6 +1,6 @@
 {
   "skill": "codex-workflow-builder",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "source": "5分钟入门Codex，一个工作流在抖音赚了5W+; Codex自动化剪辑从0到1，开源我在抖音赚了5W+的剪辑工作流【万字长文】 — xilo2991; Codex + HyperFrames 自动剪辑视频：深度技术解析与工程化最佳实践 — GeekCatX",
   "darwin_compatible": true,
   "test_cases": [
@@ -52,6 +52,20 @@
       "prompt": "把 README 自动变成讲解视频，要求可以预览、validate、render，并且以后能进CI。",
       "expected_behavior": "应激活 codex-workflow-builder，并选择HyperFrames路线，强调预览、校验、确定性输出和CI复用。",
       "notes": "README到视频是HyperFrames擅长场景。"
+    },
+    {
+      "id": "should-trigger-08",
+      "type": "should_trigger",
+      "prompt": "我想做讲书号日更，先帮我把流程做成 Workflow Contract，再交给 codex-remotion-daily-video 设计样片和 Remotion 模板。",
+      "expected_behavior": "应激活 codex-workflow-builder，先输出Workflow Contract，并把Child skill标记为codex-remotion-daily-video，说明后续由子skill处理内容赛道、HyperFrames样片、JSON schema和Remotion模板。",
+      "notes": "父子协作：父skill负责工作流合同，子skill负责日更视频专项。"
+    },
+    {
+      "id": "should-trigger-09",
+      "type": "should_trigger",
+      "prompt": "我每周要把3篇产品更新做成竖屏视频，以后想稳定复用这个流程。",
+      "expected_behavior": "应激活 codex-workflow-builder，判断这是重复视频生产流程，定义输入输出和审阅点，并建议路由到codex-remotion-daily-video处理稳定模板和渲染检查。",
+      "notes": "未显式点名子skill时，也应基于视频日更/周更信号建议路由。"
     },
     {
       "id": "should-not-trigger-01",

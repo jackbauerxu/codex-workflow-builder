@@ -2,7 +2,7 @@
 
 ![Codex Workflow Builder social cover](assets/social-cover.png)
 
-把重复任务、短视频剪辑流程、HyperFrames 视频生产管线，整理成 Codex 可以反复执行的 Skill。
+把重复任务、短视频剪辑流程、HyperFrames / Remotion 视频生产管线，整理成 Codex 可以反复执行的 Skill。
 
 这个仓库来自三篇 X 长文的方法论蒸馏，最终沉淀为一个可安装的 Codex Skill：`codex-workflow-builder`。它不是普通教程摘要，而是一个面向真实执行的工作流设计器：当你有一个模糊但反复发生的任务时，它会帮你把目标、输入、输出、目录、步骤、检查点、封装方式全部整理清楚。
 
@@ -21,6 +21,7 @@
 - 按固定结构写公众号、小红书、短视频脚本
 - 用参考视频和素材库批量生成带货短视频草稿
 - 把文章、PDF、README 做成带字幕和动效的视频
+- 把讲书号、数据科普、工具教程、产品讲解做成日更视频生产线
 - 把一个已经跑通的复杂流程封装成 Skill 或自动任务
 
 `codex-workflow-builder` 的作用，就是把这些「说不清、但经常做」的任务，拆成 Codex 能稳定执行的工作流。
@@ -115,6 +116,41 @@ Design -> Script -> Storyboard -> HTML Review Page -> Timeline Preview -> Valida
 
 它特别适合浏览器可以表达的内容：字幕、图表、截图、产品页、UI 演示、动效图卡、下三分之一字幕条、数据动画。
 
+### 4. 父子协作：对接 `codex-remotion-daily-video`
+
+当用户要做的不是单条视频，而是长期的视频日更栏目时，本 Skill 不直接吞掉所有细节，而是作为父 Skill 先定义工作流合同，再把视频专项部分交给 `codex-remotion-daily-video`。
+
+父 Skill 负责：
+
+- 判断是否值得工作流化
+- 定义触发条件、输入、输出和项目目录
+- 明确人工审阅点
+- 明确质量检查和停止条件
+- 决定是否要封装成 Skill 或自动任务
+
+子 Skill `codex-remotion-daily-video` 负责：
+
+- 判断用 HyperFrames 先做样片，还是直接进入 Remotion 模板
+- 选择内容赛道：讲书号、数据科普、工具教程、产品讲解、观点解释等
+- 设计内容 JSON schema
+- 设计 Remotion composition 和复用组件
+- 设计 still frame 检查、渲染检查和发布后复盘
+
+典型父子协作产物：
+
+```markdown
+## Workflow Contract
+- Goal: 每天把一篇书摘做成 60 秒竖屏讲书视频
+- Trigger: 用户把书摘放进 inputs/book-notes/
+- Inputs: 书名、金句、核心观点、现实案例、行动建议
+- Outputs: content JSON、HyperFrames 样片 brief、Remotion MP4
+- Project folder: daily-book-video/
+- Human review points: 样片方向、标题、still frame、最终视频
+- Quality checks: 字幕安全区、标题长度、时长、封面可读性
+- Stop conditions: 缺少书籍信息、缺少授权素材、用户未确认关键数字
+- Child skill: codex-remotion-daily-video
+```
+
 ## 三条路线怎么选
 
 | 需求 | 推荐路线 |
@@ -122,6 +158,7 @@ Design -> Script -> Storyboard -> HTML Review Page -> Timeline Preview -> Valida
 | 日报、周报、选题、资料整理 | 重复任务工作流 |
 | 有参考视频和素材库，希望生成可编辑草稿 | 剪映 / CapCut 草稿流程 |
 | 文章、PDF、README、教程转带字幕动效视频 | HyperFrames 视频流程 |
+| 讲书号、数据科普、工具教程、产品讲解日更 | 父子协作：先本 Skill，后 `codex-remotion-daily-video` |
 | 需要继续在剪辑软件里精修 | 剪映 / CapCut 草稿流程 |
 | 需要可复现 MP4 输出和工程化渲染 | HyperFrames 视频流程 |
 | 只问一个简单问题 | 不需要调用本 Skill |
@@ -157,6 +194,12 @@ git clone https://github.com/jackbauerxu/codex-workflow-builder.git ~/.codex/ski
 
 ```text
 我想用 Codex + HyperFrames 把这篇文章做成 9:16 带字幕和动效的短视频，帮我设计可复用流程。
+```
+
+或者：
+
+```text
+我想做讲书号日更，先帮我把流程做成 Workflow Contract，再交给 codex-remotion-daily-video 设计样片和 Remotion 模板。
 ```
 
 Skill 会先判断这个任务是否值得工作流化。如果只是一次性任务，它会建议直接完成任务；如果适合复用，它会继续设计目录、步骤、检查点和封装方式。
@@ -243,6 +286,7 @@ codex-workflow-builder/
 - 把参考视频结构迁移到自己的素材库
 - 把文章、PDF、README 做成视频生成流程
 - 把 HyperFrames 项目流程标准化
+- 把日更视频栏目路由到 `codex-remotion-daily-video`
 - 把视频生产从手动时间线操作变成分镜审阅和工程化渲染
 
 ## 不适合场景
@@ -256,12 +300,13 @@ codex-workflow-builder/
 
 ## 质量检查
 
-当前版本包含 12 条测试用例，覆盖：
+当前版本包含测试用例，覆盖：
 
 - 普通重复任务工作流
 - Skill 封装请求
 - 剪映 / CapCut 草稿流程
 - HyperFrames 视频流程
+- Remotion 日更视频父子协作路由
 - 不应触发的简单问答
 - 不适合自动剪辑的高要求原创视频
 - 不适合 HyperFrames 作为主路线的生成式角色视频
@@ -281,7 +326,8 @@ jq empty ~/.codex/skills/codex-workflow-builder/test-prompts.json
 3. 视频生产必须保留人工审阅点。
 4. 自动剪辑时，低置信度素材宁可留空。
 5. HyperFrames 路线必须先预览和校验，再做最终渲染。
-6. 只有跑通过至少一次的流程，才建议封装成长期 Skill 或自动任务。
+6. 视频日更路线先由本 Skill 定义合同，再由 `codex-remotion-daily-video` 处理样片、JSON、模板和渲染检查。
+7. 只有跑通过至少一次的流程，才建议封装成长期 Skill 或自动任务。
 
 ## License
 

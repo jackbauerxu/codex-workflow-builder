@@ -1,6 +1,6 @@
 ---
 name: codex-workflow-builder
-description: Convert a repeated computer task, content-production routine, business workflow, automated short-video editing routine, HyperFrames HTML video rendering routine, or "make this into a Codex Skill / automation" request into a concrete Codex project workflow with inputs, folder structure, execution steps, quality checks, and optional Skill or scheduled-task packaging. Use when the user wants to turn a fuzzy recurring process into a reusable Codex workflow, especially reference-video editing with assets and Jianying/CapCut draft output, or Codex + HyperFrames video workflows with subtitles, HTML storyboards, preview, render, and CI-ready deterministic MP4 output. Do not use for one-off factual Q&A, generic Codex tutorials, or tasks that only need a simple answer.
+description: Convert a repeated computer task, content-production routine, business workflow, automated short-video editing routine, HyperFrames or Remotion video routine, or "make this into a Codex Skill / automation" request into a concrete Codex project workflow with inputs, folder structure, execution steps, quality checks, and optional Skill or scheduled-task packaging. Use when the user wants to turn a fuzzy recurring process into a reusable Codex workflow. Do not use for one-off factual Q&A, generic Codex tutorials, or tasks that only need a simple answer.
 ---
 
 # Codex Workflow Builder
@@ -39,6 +39,7 @@ For short-video editing, choose one of two routes:
 
 - Reference-video draft route: use a proven reference video as the structure, analyze its shot rhythm, match the user's own asset library to each shot, generate voiceover and subtitles, then assemble an editable Jianying/CapCut draft.
 - HyperFrames render route: use Codex to orchestrate script, storyboard, HTML visual scenes, subtitle timing, preview, validation, and deterministic MP4 rendering through HyperFrames.
+- Daily Remotion route: use `codex-remotion-daily-video` when the user wants repeatable knowledge, tutorial, book-summary, product-explainer, data-explainer, quote, podcast-clip, product-update, or course-clip videos as a daily production line.
 
 The user remains responsible for source material, final review, and manual fixes where automated matching confidence is low.
 
@@ -74,6 +75,12 @@ The user remains responsible for source material, final review, and manual fixes
 - Method: let Codex design the storyboard and write HTML/CSS/JS composition files, then let HyperFrames preview, validate, and render deterministic MP4 output.
 - Result: the workflow is suitable for repeatable explainer videos, article-to-video, product promos, GitHub/README demos, data-driven charts, and CI-friendly video generation.
 
+### Daily Remotion video workflow
+
+- Problem: knowledge, book-summary, tutorial, product-explainer, and data-explainer creators often repeat the same video structure every day.
+- Method: first use this skill to define the Workflow Contract, then route the stable video-production details to `codex-remotion-daily-video`.
+- Result: the workflow becomes a parent-child setup: this skill owns the reusable process contract; `codex-remotion-daily-video` owns video lane, JSON schema, HyperFrames validation, Remotion templates, and render checks.
+
 ## A2 - Trigger Scenarios
 
 Use this skill when the user says or implies:
@@ -87,6 +94,9 @@ Use this skill when the user says or implies:
 - "把这个爆款视频结构做成自己的带货视频流程"
 - "帮我搭一个自动化剪辑 Skill"
 - "用 Codex + HyperFrames 做一个可复现的视频生成流程"
+- "用 Codex + HyperFrames + Remotion 做视频日更生产线"
+- "把讲书号 / 数据科普 / 工具教程 / 产品讲解做成每天可复用的视频模板"
+- "先把视频生产流程规划清楚，再交给 codex-remotion-daily-video 落地"
 - "把文章 / PDF / README 做成带字幕和动效的短视频"
 - "帮我设计 HyperFrames 的预览、校验、渲染工作流"
 - "turn this process into a Codex workflow / skill / automation"
@@ -155,6 +165,44 @@ Use:
 - `logs/` for run notes, decisions, or execution summaries.
 
 If the workflow will become a Skill, keep the reusable instructions in the skill's `SKILL.md` and only keep project-specific files in the project folder.
+
+### Parent-Child Skill Routing
+
+Use this skill as the parent when the user starts with a fuzzy repeatable process. After the Workflow Contract is clear, route specialist work to a child skill instead of copying every specialist rule into this skill.
+
+Route to `codex-remotion-daily-video` when the workflow contract says:
+
+- Goal: daily or weekly repeatable short-video production.
+- Inputs: article, book note, product note, data point, tutorial outline, quote, podcast clip, or product update.
+- Outputs: structured content JSON, HyperFrames sample brief, Remotion composition, rendered MP4, or video production runbook.
+- Repetition pattern: one or more videos per day/week, same lane or same visual system.
+- Human review: approve hook, content lane, sample direction, still frame, final MP4, or template improvement.
+
+Parent output before routing:
+
+```markdown
+## Workflow Contract
+- Goal:
+- Trigger:
+- Inputs:
+- Outputs:
+- Project folder:
+- Steps:
+- Human review points:
+- Quality checks:
+- Stop conditions:
+- Child skill: codex-remotion-daily-video
+```
+
+Then use `codex-remotion-daily-video` for:
+
+- Engine choice: HyperFrames validation, Remotion production, or both.
+- Content lane: book-summary, product-explainer, data-explainer, tool-tutorial, opinion-explainer.
+- Content JSON schema and daily-changing fields.
+- Reusable video modules.
+- Still-frame checks, render checks, and review loop.
+
+Keep the boundary clean: this skill decides whether the work deserves a reusable workflow and defines the contract; the child skill decides how the repeatable video production line should operate.
 
 For automated short-video editing, use this specialized shape:
 
