@@ -1,0 +1,94 @@
+{
+  "skill": "codex-workflow-builder",
+  "version": "0.1.0",
+  "source": "5分钟入门Codex，一个工作流在抖音赚了5W+; Codex自动化剪辑从0到1，开源我在抖音赚了5W+的剪辑工作流【万字长文】 — xilo2991; Codex + HyperFrames 自动剪辑视频：深度技术解析与工程化最佳实践 — GeekCatX",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should-trigger-01",
+      "type": "should_trigger",
+      "prompt": "我每天都要收集AI资讯、整理成选题brief，帮我做成一个Codex工作流。",
+      "expected_behavior": "应激活 codex-workflow-builder，并输出触发条件、项目目录、执行步骤、质量检查和后续是否适合做自动任务。",
+      "notes": "典型重复任务，需要从模糊流程转为可执行工作流。"
+    },
+    {
+      "id": "should-trigger-02",
+      "type": "should_trigger",
+      "prompt": "这个剪辑流程我想以后反复用，能不能帮我做成一个Skill？",
+      "expected_behavior": "应激活 codex-workflow-builder，并先梳理输入、输出、步骤、检查点，再决定是否生成Skill文件。",
+      "notes": "用户明确提出 Skill 化重复流程。"
+    },
+    {
+      "id": "should-trigger-03",
+      "type": "should_trigger",
+      "prompt": "Turn my weekly reporting routine into a reusable Codex project workflow.",
+      "expected_behavior": "应激活 codex-workflow-builder，并用Workflow Contract和项目目录组织周报流程。",
+      "notes": "英文触发，明确要求 reusable Codex workflow。"
+    },
+    {
+      "id": "should-trigger-04",
+      "type": "should_trigger",
+      "prompt": "我有一个爆款参考视频和一批产品素材，帮我设计一个自动生成剪映草稿的Codex工作流。",
+      "expected_behavior": "应激活 codex-workflow-builder，并输出参考视频拆解、素材匹配、配音字幕、剪映草稿生成和检查清单。",
+      "notes": "第二篇文章的核心场景：参考视频驱动的自动化剪辑。"
+    },
+    {
+      "id": "should-trigger-05",
+      "type": "should_trigger",
+      "prompt": "帮我把电商带货混剪流程封装成Skill，以后输入参考视频和素材库就能出草稿。",
+      "expected_behavior": "应激活 codex-workflow-builder，并先要求参考视频、素材库、目标规格、配音方案和草稿位置，再设计Skill化步骤。",
+      "notes": "明确要求把视频生产流程Skill化。"
+    },
+    {
+      "id": "should-trigger-06",
+      "type": "should_trigger",
+      "prompt": "我想用 Codex + HyperFrames 把一篇文章做成带字幕和动效的 9:16 短视频，帮我设计可复用工作流。",
+      "expected_behavior": "应激活 codex-workflow-builder，并输出输入要求、HyperFrames项目结构、脚本到分镜到预览到渲染的流程、校验点和封装建议。",
+      "notes": "第三篇文章的核心场景：HTML视频合成和确定性渲染。"
+    },
+    {
+      "id": "should-trigger-07",
+      "type": "should_trigger",
+      "prompt": "把 README 自动变成讲解视频，要求可以预览、validate、render，并且以后能进CI。",
+      "expected_behavior": "应激活 codex-workflow-builder，并选择HyperFrames路线，强调预览、校验、确定性输出和CI复用。",
+      "notes": "README到视频是HyperFrames擅长场景。"
+    },
+    {
+      "id": "should-not-trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "Codex里面斜杠命令在哪里？",
+      "expected_behavior": "不应激活本skill；直接回答功能位置即可。",
+      "notes": "只是功能问答，不需要工作流设计。"
+    },
+    {
+      "id": "should-not-trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "帮我把这个PDF总结成500字。",
+      "expected_behavior": "不应激活本skill；这是单次总结任务，除非用户进一步要求做成可复用流程。",
+      "notes": "看似可用Codex执行，但没有重复流程信号。"
+    },
+    {
+      "id": "should-not-trigger-03",
+      "type": "should_not_trigger",
+      "prompt": "我想拍一支电影感品牌大片，需要很细腻的镜头语言和情绪表达。",
+      "expected_behavior": "不应把自动化混剪流程作为主方案；应建议人主导的创意制作流程。",
+      "notes": "第二篇文章明确边界：自动生产不等于高质量原创。"
+    },
+    {
+      "id": "should-not-trigger-04",
+      "type": "should_not_trigger",
+      "prompt": "我想做一集强剧情AI漫剧，重点是角色表演和连续画面生成。",
+      "expected_behavior": "不应把HyperFrames作为主方案；应说明HyperFrames更适合浏览器可表达的动效、字幕、图卡和界面模拟。",
+      "notes": "第三篇文章的边界：不适合强依赖生成式画面和表演的赛道。"
+    },
+    {
+      "id": "edge-01",
+      "type": "edge_case",
+      "prompt": "帮我写一篇公众号文章，下次也可能会继续用这个风格。",
+      "expected_behavior": "可以先完成文章；若用户强调复用，应激活本skill把写作过程沉淀为runbook或Skill。",
+      "notes": "边界在于用户是否真的要复用流程，而不是只要当前产出。"
+    }
+  ],
+  "minimum_pass_rate": 0.8,
+  "notes": "全部 should_not_trigger 必须通过；edge case 应说明是否需要先做一次手动流程再沉淀。视频剪辑场景必须保留人工 review 和低置信度留空规则；HyperFrames场景必须保留预览、校验、渲染三段检查。"
+}
