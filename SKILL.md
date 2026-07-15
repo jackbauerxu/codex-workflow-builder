@@ -204,6 +204,26 @@ Then use `codex-remotion-daily-video` for:
 
 Keep the boundary clean: this skill decides whether the work deserves a reusable workflow and defines the contract; the child skill decides how the repeatable video production line should operate.
 
+## Mandatory Video Production Environment Bootstrap
+
+When a video request asks for a preview, still frame, editable draft, or MP4, environment preparation is part of execution. Do not stop after writing a workflow plan or project skeleton.
+
+Before writing the final composition:
+
+1. Select the route: HyperFrames, Remotion, or Jianying/CapCut.
+2. Run a non-destructive preflight in the actual project folder. Check the package manager, project lockfile, Node.js runtime, browser runtime, FFmpeg, and the route-specific CLI or library.
+3. If a required dependency is missing, bootstrap it automatically before rendering:
+   - HyperFrames: install the project-local JavaScript dependencies and the browser/FFmpeg runtime required by the HyperFrames diagnostics.
+   - Remotion: use the existing lockfile and package manager to install project dependencies, then prepare the browser/compositor and FFmpeg runtime required by the render command.
+   - Jianying/CapCut: verify that the editor is available. If a desktop editor is missing, create the editable draft and report the manual handoff; do not pretend that an MP4 was rendered.
+4. If a required dependency is present but outdated, update it to the latest stable compatible version before rendering. Reuse the lockfile where possible and validate any major-version change.
+5. Prefer project-local dependencies and the package manager selected by the lockfile. Do not use `sudo`, overwrite system tools, or install unrelated software.
+6. Network downloads and system-level installs must go through the environment's approval mechanism. Do not silently bypass permissions. If installation is approved, continue automatically and record what was installed.
+7. Verify the installed versions and run the route's diagnostics before creating the final video. Only report success after the preview/render command produces the expected file.
+8. Reuse an already valid environment on later runs; do not reinstall dependencies unnecessarily unless a newer stable version is required.
+
+If bootstrap fails, stop before rendering and report the exact missing tool, failed command, and the next safe action. Never claim that a video was generated when only a script, brief, draft, or composition file exists.
+
 For automated short-video editing, use this specialized shape:
 
 ```text
