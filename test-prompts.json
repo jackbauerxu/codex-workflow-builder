@@ -1,7 +1,8 @@
 {
   "skill": "codex-workflow-builder",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "source": "5分钟入门Codex，一个工作流在抖音赚了5W+; Codex自动化剪辑从0到1，开源我在抖音赚了5W+的剪辑工作流【万字长文】 — xilo2991; Codex + HyperFrames 自动剪辑视频：深度技术解析与工程化最佳实践 — GeekCatX",
+  "integration_source": "zhouwei713/seedance-prompt — MIT; adapted as the generative-video production route",
   "darwin_compatible": true,
   "test_cases": [
     {
@@ -57,7 +58,7 @@
       "id": "should-trigger-08",
       "type": "should_trigger",
       "prompt": "我想做讲书号日更，先帮我把流程做成 Workflow Contract，再交给 codex-remotion-daily-video 设计样片和 Remotion 模板。",
-      "expected_behavior": "应激活 codex-workflow-builder，先输出Workflow Contract，并把Child skill标记为codex-remotion-daily-video，说明后续由子skill处理内容赛道、HyperFrames样片、JSON schema和Remotion模板。",
+      "expected_behavior": "应激活 codex-workflow-builder，先输出Workflow Contract，并把Child skill标记为codex-remotion-daily-video，说明后续由子skill处理内容格式、HyperFrames样片、JSON schema和Remotion模板。",
       "notes": "父子协作：父skill负责工作流合同，子skill负责日更视频专项。"
     },
     {
@@ -71,21 +72,21 @@
       "id": "should-trigger-10",
       "type": "should_trigger",
       "prompt": "用这个 AI 产品更新做一条 30 秒 9:16 短视频，风格要极简、以后能持续复用。",
-      "expected_behavior": "应选择 ai-demo 赛道、minimal 预设、脚本模板、镜头 ID 和质量门，再进入分镜；首个预览只能算候选。",
-      "notes": "Production Skill 的核心路径：赛道、预设、知识库和预览 QA。"
+      "expected_behavior": "应选择 AI 演示项目模板、minimal 预设、脚本模板、镜头 ID 和质量门，再进入分镜；首个预览只能算候选。",
+      "notes": "Production Skill 的核心路径：内容格式、预设、知识库和预览 QA。"
     },
     {
       "id": "should-trigger-11",
       "type": "should_trigger",
       "prompt": "我有产品包装和使用素材，帮我做一条 25 秒开箱短视频。",
-      "expected_behavior": "应选择 unboxing 赛道，使用开箱提示词和真实素材清单；缺少配件或场景必须标记 missing_asset。",
+      "expected_behavior": "应选择开箱项目模板，使用开箱提示词和真实素材清单；缺少配件或场景必须标记 missing_asset。",
       "notes": "开箱模板不能用泛化 B-roll 代替真实物件。"
     },
     {
       "id": "should-trigger-12",
       "type": "should_trigger",
       "prompt": "把今天已确认的 AI 融资新闻做成 45 秒新闻卡片视频。",
-      "expected_behavior": "应选择 news 赛道和 Bloomberg 或明确替代预设，先记录事实来源，再使用新闻脚本、来源卡和数据卡。",
+      "expected_behavior": "应选择新闻项目模板和 Bloomberg 或明确替代预设，先记录事实来源，再使用新闻脚本、来源卡和数据卡。",
       "notes": "新闻视频必须优先来源与事实边界。"
     },
     {
@@ -94,6 +95,20 @@
       "prompt": "缺少产品画面时，为 30 秒 AI 工具讲解设计一组能解释功能的 B-roll。",
       "expected_behavior": "应选择 B-roll 提示词，先标记缺少的素材，再给出可授权拍摄或生成的镜头意图；不得把素材假装成已存在。",
       "notes": "B-roll 必须补足叙事，不得掩盖缺失素材。"
+    },
+    {
+      "id": "should-trigger-14",
+      "type": "should_trigger",
+      "prompt": "用 Seedance 生成一段 12 秒的真实手机随拍 B-roll，补进这个产品视频。",
+      "expected_behavior": "应选择生成式视频资产路线，先记录 Source Identity、设备/年代、授权与生成状态，再按 seven sections 输出可投喂提示词；没有真实文件时必须标记 planned 或 not_rendered。",
+      "notes": "生成式视频是生产资产，不得被误报成已经渲染的成片。"
+    },
+    {
+      "id": "edge-03",
+      "type": "edge_case",
+      "prompt": "我有用户授权的产品实拍，想再生成两段怀旧 DV 质感的过场。",
+      "expected_behavior": "应区分 authorized real assets 与 generated assets；生成段建立 Continuity Ledger 并使用设备缺陷与非完美事件，不复制参考视频或假称已经生成。",
+      "notes": "混合资产生产必须保留来源、连续性和真实交付边界。"
     },
     {
       "id": "edge-02",
@@ -128,7 +143,7 @@
       "type": "should_not_trigger",
       "prompt": "我想做一集强剧情AI漫剧，重点是角色表演和连续画面生成。",
       "expected_behavior": "不应把HyperFrames作为主方案；应说明HyperFrames更适合浏览器可表达的动效、字幕、图卡和界面模拟。",
-      "notes": "第三篇文章的边界：不适合强依赖生成式画面和表演的赛道。"
+      "notes": "第三篇文章的边界：不适合强依赖生成式画面和表演的内容格式。"
     },
     {
       "id": "edge-01",

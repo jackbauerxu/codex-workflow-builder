@@ -118,15 +118,15 @@ Design -> Script -> Storyboard -> HTML Review Page -> Timeline Preview -> Valida
 
 ## Production System
 
-这一版不再只有“调用工具 → 输出视频”的 SOP。视频任务会先生成一份 `Production Configuration`，明确内容赛道、风格预设、事实来源、脚本模板、镜头 ID 和参考资产，再进入分镜、预览和渲染。
+这一版不再只有“调用工具 → 输出视频”的 SOP。视频任务会先生成一份 `Production Configuration`，明确内容格式、风格预设、事实来源、脚本模板、镜头 ID 和参考资产，再进入分镜、预览和渲染。
 
 ```text
 codex-workflow-builder/
 ├── scripts/       # 可组合基础骨架与项目脚本模板
-├── prompts/       # TikTok、AI 演示、产品、开箱、新闻、B-roll
+├── prompts/       # TikTok、AI 演示、产品、开箱、新闻、B-roll、生成式视频
 ├── styles/        # Apple、Tesla、Bloomberg、Cyberpunk、Minimal 预设
-├── references/    # 设计语言、镜头库、动效、参考图、分镜和视频接入规范
-├── examples/      # 输入 → 配置 → 分镜 → 最终帧的 Few-shot 示例
+├── references/    # 设计语言、镜头库、动效、生成式视频、参考图、分镜和视频接入规范
+├── examples/      # 输入 → 配置 → 分镜 → 最终帧/生成资产计划的 Few-shot 示例
 ├── remotion/      # 可交给真实 Remotion 工程的生产合同
 └── tests/         # 生产资料与运行时路由的回归测试
 ```
@@ -140,10 +140,20 @@ codex-workflow-builder/
 ### Script and Prompt Libraries
 
 - `scripts/` 固定开场、叙事、收尾和字幕的作用，并提供 AI 演示、产品发布、开箱、新闻解释、TikTok/Shorts、B-roll、教程、案例复盘、对比选型和趋势观点等项目模板。
-- `prompts/` 覆盖 TikTok、AI 产品演示、产品介绍、开箱、新闻播报和 B-roll；每份都要求镜头、时长、事实来源与缺失素材处理。
+- `prompts/` 覆盖 TikTok、AI 产品演示、产品介绍、开箱、新闻播报、B-roll 和生成式视频；每份都要求镜头、时长、事实来源与缺失素材处理。
 - `references/shot-library.md` 提供可直接写进分镜的镜头 ID、构图和时长。
 
 这些模板不是封闭范围。新题材先选最接近的项目模板，再与开场、叙事、收尾和字幕骨架组合；没有完全对应的模板时，写出可审查的 `custom beat map`，而不是退回成泛泛的旁白。
+
+### Seedance / 生成式视频资产
+
+融合 [zhouwei713/seedance-prompt](https://github.com/zhouwei713/seedance-prompt) 的 MIT 方法后，缺少关键画面时可把生成式视频当作受控资产路线：先定义素材身份（谁、为何、设备/年代）、设备物理特征、自然失误、时间轴、音画关系和收束，再生成可投喂的 prompt。
+
+它不会替代真实素材，也不会把 prompt、缩略图或设想的画面写成已交付视频。多段生成必须有 Continuity Ledger 锁定人物、地点、时间、相机语法、声音和首末帧锚点；选择的 `style_preset` 继续控制成片的版式、字幕和转场。
+
+- `prompts/generative-video.md`：七段式模型提示词与资产状态记录。
+- `references/generative-video-production.md`：来源身份、设备语法、自然事件、连续性账本和 QA 门。
+- `examples/generative-video-sequence.md`：从用户授权实拍到生成 B-roll 的完整 Few-shot，明确标为 `not_rendered`。
 
 ### Reference Assets
 
@@ -158,6 +168,7 @@ codex-workflow-builder/
 - [AI 功能演示](examples/ai-demo.md)：30 秒 Minimal 录屏讲解。
 - [产品发布](examples/product-launch.md)：30 秒 Apple 风格的真实物件演示。
 - [新闻速览](examples/news-brief.md)：45 秒 Bloomberg 风格的来源优先新闻解释。
+- [生成式 B-roll 序列](examples/generative-video-sequence.md)：Seedance 风格的两段连续资产计划，不假称已生成。
 
 每个示例都包含输入、Production Configuration、脚本/镜头骨架和通过条件，告诉使用者“最佳输出长什么样”，而不是只给一段抽象提示词。
 
@@ -176,7 +187,7 @@ codex-workflow-builder/
 子 Skill `codex-remotion-daily-video` 负责：
 
 - 判断用 HyperFrames 先做样片，还是直接进入 Remotion 模板
-- 选择内容赛道：讲书号、数据科普、工具教程、产品讲解、观点解释等
+- 选择内容格式：讲书号、数据科普、工具教程、产品讲解、观点解释等
 - 设计内容 JSON schema
 - 设计 Remotion composition 和复用组件
 - 设计 still frame 检查、渲染检查和发布后复盘
@@ -380,7 +391,7 @@ codex-workflow-builder/
 - 剪映 / CapCut 草稿流程
 - HyperFrames 视频流程
 - Remotion 日更视频父子协作路由
-- AI 产品演示、产品开箱、新闻播报和 TikTok/Shorts 生产路径
+- AI 产品演示、产品开箱、新闻播报、TikTok/Shorts 与受控生成式视频资产路径
 - 单一风格预设锁定、脚本/镜头/提示词路由和缺失素材处理
 - 参考资产、最终帧示例、首个预览候选与最终渲染的真实状态
 - 不应触发的简单问答
@@ -405,7 +416,8 @@ bash ~/.codex/skills/codex-workflow-builder/tests/production-skill-contract/focu
 5. HyperFrames 路线必须先预览和校验，再做最终渲染。
 6. 视频日更路线先由本 Skill 定义合同，再由 `codex-remotion-daily-video` 处理样片、JSON、模板和渲染检查。
 7. 只有跑通过至少一次的流程，才建议封装成长期 Skill 或自动任务。
-8. 视频生产必须先选内容赛道和单一风格预设，再引用脚本、提示词、镜头和参考资产；不能让泛化设计指令覆盖设计锁。
+8. 视频生产必须先选内容格式和单一风格预设，再引用脚本、提示词、镜头和参考资产；不能让泛化设计指令覆盖设计锁。
+9. 生成式视频必须记录素材身份、权利、状态和真实文件路径；只有通过 QA 的 `accepted` 资产才能进入最终时间线。
 
 ## License
 

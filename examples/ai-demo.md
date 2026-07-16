@@ -5,7 +5,7 @@
 **Production Configuration**
 
 ```yaml
-lane: ai-demo
+  content_format: "AI demo"
 style_preset: minimal
 format: 1080x1920 / 30fps / 30s
 verified_promise: "把会议纪要中的待办整理成可确认任务"

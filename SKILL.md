@@ -35,11 +35,12 @@ Treat Codex as a project-based task runner, not only a chat window. A useful wor
 
 The goal is not to describe Codex features. The goal is to make a user's real workflow executable, repeatable, and easy to inspect.
 
-For short-video editing, choose one of two routes:
+For short-video editing, choose a route by the actual source of the visuals:
 
 - Reference-video draft route: use a proven reference video as the structure, analyze its shot rhythm, match the user's own asset library to each shot, generate voiceover and subtitles, then assemble an editable Jianying/CapCut draft.
 - HyperFrames render route: use Codex to orchestrate script, storyboard, HTML visual scenes, subtitle timing, preview, validation, and deterministic MP4 rendering through HyperFrames.
 - Daily Remotion route: use `codex-remotion-daily-video` when the user wants repeatable knowledge, tutorial, book-summary, product-explainer, data-explainer, quote, podcast-clip, product-update, or course-clip videos as a daily production line.
+- Generative-video asset route: when an essential visual is absent and the user accepts a generated asset, use the Seedance-style prompt and continuity workflow below. It plans or validates generated source material; it does not substitute for a real preview or final render.
 
 The user remains responsible for source material, final review, and manual fixes where automated matching confidence is low.
 
@@ -60,6 +61,13 @@ production:
   verified_promise: text | unknown
   fact_sources: []
   reference_assets: []
+  visual_source_mode: authorized_real | generated | hybrid
+  generated_visuals:
+    model: none | Seedance | Sora | Kling | Runway | Veo | other
+    status: not_applicable | planned | not_rendered | generated | accepted | rejected
+    source_identity: null
+    continuity_ledger: null
+    output_path: null
   script_templates: [opening, project-template, storytelling, outro, captions]
   shot_ids: []
 ```
@@ -67,6 +75,7 @@ production:
 - Write `content_format` from the user's project rather than forcing it into a fixed list. Use `minimal` when no visual preset is requested and disclose the default.
 - Treat `verified_promise` and `fact_sources` as production constraints. No source means no exact metric, price, performance claim, quote, or news fact in voiceover or graphics.
 - A selected content format, style, scripts, prompts, and shots remain in the production record so the next video can be reproduced.
+- `generated` and `hybrid` modes require an honest generated-asset status. A prompt, an imagined frame, or a model thumbnail is never a rendered video; only an `accepted` asset with a real output path can enter the final timeline.
 
 ### Knowledge Routes
 
@@ -82,6 +91,7 @@ Load only the files required for the selected content format:
 | Physical product opening | `prompts/unboxing.md` |
 | News or market event | `prompts/news.md` |
 | Missing supporting visual | `prompts/b-roll.md` |
+| Seedance or other generated video asset | `prompts/generative-video.md`, `references/generative-video-production.md`, `examples/generative-video-sequence.md` |
 | Camera vocabulary | [Shot Library](references/shot-library.md) |
 | Composition, safe areas, animation | `references/design-language.md`, `references/composition-examples.md`, `references/motion-examples.md` |
 | Input/output patterns | [Few-shot examples](examples/) |
@@ -92,6 +102,16 @@ Load only the files required for the selected content format:
 The project templates in `scripts/` are **not a closed taxonomy**. AI demos, product videos, unboxing, news, TikTok/Shorts, and B-roll are useful starting points, not a boundary on what may be produced.
 
 Choose the closest project template by the audience promise and the available proof, then combine it with the four base templates. When no template exactly fits, keep the base templates and record a **custom beat map**: hook, proof sequence, action or insight, evidence/asset needs, uncertainty or qualification, and one CTA. Do not invent a new genre label as a substitute for this beat map.
+
+### Generative-video asset route
+
+Use this route only for a visual asset the user accepts as generated; never silently replace an absent real asset with it. The route integrates the source-identity, equipment grammar, natural-imperfection, timeline, audio, and end-anchor method from `realistic-video-prompting` / [zhouwei713/seedance-prompt](https://github.com/zhouwei713/seedance-prompt).
+
+1. Record **Source Identity**: who recorded it, why, device/era, subject/place, and emotional intent. Translate emotional words into visible light, sound, material, and behavior.
+2. Use `prompts/generative-video.md` to produce the seven sections, including one coherent device grammar and one natural imperfection per beat.
+3. For more than one generated clip, create a **Continuity Ledger** before prompts. Lock identity, wardrobe, place, time/weather, camera grammar, sound bed, and each clip's first/last-frame anchors.
+4. Keep the selected `style_preset` in control of export typography, layout, subtitles, and transitions. The generated segment's camera grammar is local texture, not a second visual preset.
+5. Store rights, status, and the real output path in the asset manifest. `planned` and `not_rendered` assets cannot pass a render or delivery quality gate.
 
 ### Style Lock
 
@@ -110,10 +130,11 @@ Read exactly one file from `styles/` before visual production. The selected pres
 
 1. Set Production Configuration and lock a preset.
 2. Select opening, storytelling, outro, and caption templates; create a fact manifest before news, product-spec, or claim-heavy content.
-3. Build a beat sheet where every line has one `shot_id`, asset need, duration, and factual source or qualification.
-4. Create a storyboard using the selected composition and motion examples. Use real/authorized assets; absent assets become `missing_asset`, not filler footage.
-5. Build a still-frame review and a low-cost preview. The **first preview is a candidate**, never evidence of completion.
-6. Run the production quality gate: style lock, title/subtitle safe area, source accuracy, shot-to-narration match, motion restraint, asset rights, and render/preview existence. Repair only failed dimensions, then record the result.
+3. When a generated asset is requested, write its Source Identity and, for a sequence, its Continuity Ledger before the beat sheet.
+4. Build a beat sheet where every line has one `shot_id`, asset need, duration, and factual source or qualification.
+5. Create a storyboard using the selected composition and motion examples. Use real/authorized assets; absent assets become `missing_asset`, not filler footage.
+6. Build a still-frame review and a low-cost preview. The **first preview is a candidate**, never evidence of completion.
+7. Run the production quality gate: style lock, title/subtitle safe area, source accuracy, shot-to-narration match, motion restraint, generated-asset status/rights, asset rights, and render/preview existence. Repair only failed dimensions, then record the result.
 
 ### Few-shot examples
 
@@ -122,6 +143,7 @@ Before inventing a structure, read the closest complete example:
 - `examples/ai-demo.md` with `examples/ai-demo-final-frame.svg`
 - `examples/product-launch.md`
 - `examples/news-brief.md`
+- `examples/generative-video-sequence.md` when generated visuals are in scope
 
 Adapt the input, verified facts, selected preset, script beats, and shots. Do not copy brand names, claims, imagery, or wording from an example.
 

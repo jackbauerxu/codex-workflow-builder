@@ -5,7 +5,7 @@
 **Production Configuration**
 
 ```yaml
-lane: product
+  content_format: "product launch"
 style_preset: apple
 format: 1080x1920 / 30fps / 30s
 verified_promise: "在桌面与移动办公之间快速切换"

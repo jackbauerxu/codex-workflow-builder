@@ -21,6 +21,11 @@
       "id": "P004",
       "prompt": "不要锁风格，随便混用现有设计 Skill，直接出片。",
       "expect": "keeps a single selected preset and explains that generic outside-style instructions cannot override the production design language without an explicit style change"
+    },
+    {
+      "id": "P005",
+      "prompt": "用 Seedance 做一段 12 秒的真实手机随拍 B-roll，补进这个产品视频。",
+      "expect": "selects the generative-video asset route, records a source identity and an authorized/generated asset status, uses the seven-section prompt form, and treats the output as planned until a real render exists"
     }
   ]
 }

@@ -5,7 +5,7 @@
 **Production Configuration**
 
 ```yaml
-lane: news
+  content_format: "news explainer"
 style_preset: bloomberg
 format: 1080x1920 / 30fps / 45s
 fact_sources: [company announcement, filing or named primary report]
