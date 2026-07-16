@@ -53,28 +53,29 @@ Create this configuration before writing narration, prompts, scenes, or code:
 
 ```yaml
 production:
-  lane: ai-demo | product | unboxing | news | tiktok
+  content_format: "project format or custom description"
   style_preset: minimal | apple | tesla | bloomberg | cyberpunk
   format: "1080x1920 / 9:16 / 30fps"
   duration_seconds: 15-60
   verified_promise: text | unknown
   fact_sources: []
   reference_assets: []
-  script_templates: []
+  script_templates: [opening, project-template, storytelling, outro, captions]
   shot_ids: []
 ```
 
-- Infer `lane` only when the request is unambiguous; otherwise ask one concise question. Use `minimal` when no visual preset is requested and disclose the default.
+- Write `content_format` from the user's project rather than forcing it into a fixed list. Use `minimal` when no visual preset is requested and disclose the default.
 - Treat `verified_promise` and `fact_sources` as production constraints. No source means no exact metric, price, performance claim, quote, or news fact in voiceover or graphics.
-- A selected lane, style, scripts, prompts, and shots remain in the production record so the next video can be reproduced.
+- A selected content format, style, scripts, prompts, and shots remain in the production record so the next video can be reproduced.
 
 ### Knowledge Routes
 
-Load only the files required for the selected lane:
+Load only the files required for the selected content format:
 
 | Need | Read |
 | --- | --- |
 | Hooks, explanation beats, CTA, captions | `scripts/opening.md`, `scripts/storytelling.md`, `scripts/outro.md`, `scripts/captions.md` |
+| Project structure and template selection | `scripts/README.md` plus one matching project template |
 | Fast social viewpoint or tutorial | `prompts/tiktok.md` |
 | AI or SaaS walkthrough | `prompts/ai-demo.md` |
 | Product launch or feature story | `prompts/product.md` |
@@ -85,6 +86,12 @@ Load only the files required for the selected lane:
 | Composition, safe areas, animation | `references/design-language.md`, `references/composition-examples.md`, `references/motion-examples.md` |
 | Input/output patterns | [Few-shot examples](examples/) |
 | Remotion handoff | `remotion/production-contract.md` |
+
+### Script Library
+
+The project templates in `scripts/` are **not a closed taxonomy**. AI demos, product videos, unboxing, news, TikTok/Shorts, and B-roll are useful starting points, not a boundary on what may be produced.
+
+Choose the closest project template by the audience promise and the available proof, then combine it with the four base templates. When no template exactly fits, keep the base templates and record a **custom beat map**: hook, proof sequence, action or insight, evidence/asset needs, uncertainty or qualification, and one CTA. Do not invent a new genre label as a substitute for this beat map.
 
 ### Style Lock
 
@@ -154,7 +161,7 @@ Adapt the input, verified facts, selected preset, script beats, and shots. Do no
 
 - Problem: knowledge, book-summary, tutorial, product-explainer, and data-explainer creators often repeat the same video structure every day.
 - Method: first use this skill to define the Workflow Contract, then route the stable video-production details to `codex-remotion-daily-video`.
-- Result: the workflow becomes a parent-child setup: this skill owns the reusable process contract; `codex-remotion-daily-video` owns video lane, JSON schema, HyperFrames validation, Remotion templates, and render checks.
+- Result: the workflow becomes a parent-child setup: this skill owns the reusable process contract; `codex-remotion-daily-video` owns video specialization, JSON schema, HyperFrames validation, Remotion templates, and render checks.
 
 ## A2 - Trigger Scenarios
 
@@ -250,8 +257,8 @@ Route to `codex-remotion-daily-video` when the workflow contract says:
 - Goal: daily or weekly repeatable short-video production.
 - Inputs: article, book note, product note, data point, tutorial outline, quote, podcast clip, or product update.
 - Outputs: structured content JSON, HyperFrames sample brief, Remotion composition, rendered MP4, or video production runbook.
-- Repetition pattern: one or more videos per day/week, same lane or same visual system.
-- Human review: approve hook, content lane, sample direction, still frame, final MP4, or template improvement.
+- Repetition pattern: one or more videos per day/week, same format or same visual system.
+- Human review: approve hook, content format, sample direction, still frame, final MP4, or template improvement.
 
 Parent output before routing:
 
@@ -272,7 +279,7 @@ Parent output before routing:
 Then use `codex-remotion-daily-video` for:
 
 - Engine choice: HyperFrames validation, Remotion production, or both.
-- Content lane: book-summary, product-explainer, data-explainer, tool-tutorial, opinion-explainer.
+- Content format examples: book-summary, product-explainer, data-explainer, tool-tutorial, opinion-explainer; add a custom beat map when none is exact.
 - Content JSON schema and daily-changing fields.
 - Reusable video modules.
 - Still-frame checks, render checks, and review loop.

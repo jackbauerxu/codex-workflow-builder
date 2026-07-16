@@ -122,7 +122,7 @@ Design -> Script -> Storyboard -> HTML Review Page -> Timeline Preview -> Valida
 
 ```text
 codex-workflow-builder/
-├── scripts/       # 开场、叙事、收尾、字幕模板
+├── scripts/       # 可组合基础骨架与项目脚本模板
 ├── prompts/       # TikTok、AI 演示、产品、开箱、新闻、B-roll
 ├── styles/        # Apple、Tesla、Bloomberg、Cyberpunk、Minimal 预设
 ├── references/    # 设计语言、镜头库、动效、参考图、分镜和视频接入规范
@@ -139,9 +139,11 @@ codex-workflow-builder/
 
 ### Script and Prompt Libraries
 
-- `scripts/` 固定开场、叙事、收尾和字幕的作用，避免每次重写节奏。
+- `scripts/` 固定开场、叙事、收尾和字幕的作用，并提供 AI 演示、产品发布、开箱、新闻解释、TikTok/Shorts、B-roll、教程、案例复盘、对比选型和趋势观点等项目模板。
 - `prompts/` 覆盖 TikTok、AI 产品演示、产品介绍、开箱、新闻播报和 B-roll；每份都要求镜头、时长、事实来源与缺失素材处理。
 - `references/shot-library.md` 提供可直接写进分镜的镜头 ID、构图和时长。
+
+这些模板不是封闭范围。新题材先选最接近的项目模板，再与开场、叙事、收尾和字幕骨架组合；没有完全对应的模板时，写出可审查的 `custom beat map`，而不是退回成泛泛的旁白。
 
 ### Reference Assets
 

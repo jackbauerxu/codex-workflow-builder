@@ -4,12 +4,12 @@
 
 ```yaml
 production:
-  lane: ai-demo | product | unboxing | news | tiktok
+  content_format: "project format or custom description"
   style_preset: minimal | apple | tesla | bloomberg | cyberpunk
   format: 1080x1920
   fps: 30
   duration_seconds: 15-60
-  scripts: [scripts/opening.md, scripts/storytelling.md, scripts/outro.md, scripts/captions.md]
+  scripts: [scripts/opening.md, scripts/<project-template>.md, scripts/storytelling.md, scripts/outro.md, scripts/captions.md]
   shot_ids: []
   asset_manifest: inputs/asset-manifest.json
   fact_manifest: inputs/fact-manifest.json
