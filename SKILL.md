@@ -43,6 +43,82 @@ For short-video editing, choose one of two routes:
 
 The user remains responsible for source material, final review, and manual fixes where automated matching confidence is low.
 
+## Production System for Video Work
+
+Workflow steps alone do not make a repeatable video product. For video requests, use the bundled production knowledge before designing a storyboard. The goal is consistent, inspectable output—not a generic script that changes aesthetic rules on every run.
+
+### Production Configuration
+
+Create this configuration before writing narration, prompts, scenes, or code:
+
+```yaml
+production:
+  lane: ai-demo | product | unboxing | news | stock-analysis | tiktok
+  style_preset: minimal | apple | tesla | bloomberg | cyberpunk
+  format: "1080x1920 / 9:16 / 30fps"
+  duration_seconds: 15-60
+  verified_promise: text | unknown
+  fact_sources: []
+  reference_assets: []
+  script_templates: []
+  shot_ids: []
+```
+
+- Infer `lane` only when the request is unambiguous; otherwise ask one concise question. Use `minimal` when no visual preset is requested and disclose the default.
+- Treat `verified_promise` and `fact_sources` as production constraints. No source means no exact metric, price, performance claim, quote, financial conclusion, or news fact in voiceover or graphics.
+- A selected lane, style, scripts, prompts, and shots remain in the production record so the next video can be reproduced.
+
+### Knowledge Routes
+
+Load only the files required for the selected lane:
+
+| Need | Read |
+| --- | --- |
+| Hooks, explanation beats, CTA, captions | `scripts/opening.md`, `scripts/storytelling.md`, `scripts/outro.md`, `scripts/captions.md` |
+| Fast social viewpoint or tutorial | `prompts/tiktok.md` |
+| AI or SaaS walkthrough | `prompts/ai-demo.md` |
+| Product launch or feature story | `prompts/product.md` |
+| Physical product opening | `prompts/unboxing.md` |
+| News or market event | `prompts/news.md` |
+| Financial/stock analysis | `prompts/stock-analysis.md`, `scripts/stock-analysis.md`, `examples/stock-analysis.md` |
+| Missing supporting visual | `prompts/b-roll.md` |
+| Camera vocabulary | [Shot Library](references/shot-library.md) |
+| Composition, safe areas, animation | `references/design-language.md`, `references/composition-examples.md`, `references/motion-examples.md` |
+| Input/output patterns | [Few-shot examples](examples/) |
+| Remotion handoff | `remotion/production-contract.md` |
+
+### Style Lock
+
+Read exactly one file from `styles/` before visual production. The selected preset owns typography, palette, grid, whitespace, subtitle behavior, movement, and transition vocabulary for the entire video.
+
+**No generic-style override**: do not silently mix in another design Skill's default look, a random reference, a second preset, or decorative effects. A change is allowed only when the user explicitly changes `style_preset`; then re-check every scene against the new preset. The named presets describe transferable design traits only—never reproduce a company's logo, proprietary UI, source footage, soundtrack, or exact campaign composition.
+
+### Reference Assets
+
+- Use `references/images/vertical-safe-area.svg` before laying out vertical text and subtitles.
+- Use the SVG storyboards and `references/composition-examples.md` as self-authored layout references, not as visual material to trace.
+- Use `references/motion-examples.md` to select a limited motion vocabulary. If motion does not clarify time, hierarchy, causality, or focus, remove it.
+- For external reference video, follow `references/videos/README.md`: record rights, learn only reusable rhythm/framing principles, and never copy footage, edit sequence, music, logos, or voice.
+
+### Production Sequence
+
+1. Set Production Configuration and lock a preset.
+2. Select opening, storytelling, outro, and caption templates; create a fact manifest before news, financial, product-spec, or claim-heavy content.
+3. Build a beat sheet where every line has one `shot_id`, asset need, duration, and factual source or qualification.
+4. Create a storyboard using the selected composition and motion examples. Use real/authorized assets; absent assets become `missing_asset`, not filler footage.
+5. Build a still-frame review and a low-cost preview. The **first preview is a candidate**, never evidence of completion.
+6. Run the production quality gate: style lock, title/subtitle safe area, source accuracy, shot-to-narration match, motion restraint, asset rights, and render/preview existence. Repair only failed dimensions, then record the result.
+
+### Few-shot examples
+
+Before inventing a structure, read the closest complete example:
+
+- `examples/ai-demo.md` with `examples/ai-demo-final-frame.svg`
+- `examples/product-launch.md`
+- `examples/news-brief.md`
+
+Adapt the input, verified facts, selected preset, script beats, and shots. Do not copy brand names, claims, imagery, or wording from an example.
+
 ## A1 - Article Applications
 
 ### Ecommerce video workflow

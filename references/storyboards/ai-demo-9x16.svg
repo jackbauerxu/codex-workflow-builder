@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900" role="img" aria-label="AI demo storyboard reference">
+  <rect width="1200" height="900" fill="#F6F4EF"/>
+  <text x="60" y="70" fill="#171717" font-family="Arial, sans-serif" font-size="34" font-weight="700">AI DEMO · 30s · MINIMAL</text>
+  <g font-family="Arial, sans-serif">
+    <g transform="translate(60,120)"><rect width="240" height="600" rx="20" fill="#171717"/><text x="24" y="66" fill="white" font-size="24" font-weight="700">01 HOOK</text><text x="24" y="126" fill="white" font-size="20">任务散在聊天里</text><rect x="24" y="190" width="192" height="220" rx="12" fill="#2F2F2F"/><text x="24" y="550" fill="#93C5FD" font-size="18">0–3s</text></g>
+    <g transform="translate(330,120)"><rect width="240" height="600" rx="20" fill="#FFFFFF" stroke="#171717"/><text x="24" y="66" fill="#171717" font-size="24" font-weight="700">02 PROOF</text><rect x="24" y="110" width="192" height="250" rx="12" fill="#E5E7EB"/><path d="M48 310 L176 190" stroke="#2563EB" stroke-width="10"/><text x="24" y="550" fill="#2563EB" font-size="18">3–12s</text></g>
+    <g transform="translate(600,120)"><rect width="240" height="600" rx="20" fill="#FFFFFF" stroke="#171717"/><text x="24" y="66" fill="#171717" font-size="24" font-weight="700">03 PATH</text><circle cx="60" cy="190" r="22" fill="#2563EB"/><circle cx="120" cy="300" r="22" fill="#2563EB"/><circle cx="180" cy="410" r="22" fill="#2563EB"/><path d="M60 212 L120 278 L180 388" stroke="#171717" stroke-width="6" fill="none"/><text x="24" y="550" fill="#2563EB" font-size="18">12–25s</text></g>
+    <g transform="translate(870,120)"><rect width="240" height="600" rx="20" fill="#171717"/><text x="24" y="66" fill="white" font-size="24" font-weight="700">04 CTA</text><rect x="24" y="260" width="192" height="80" rx="14" fill="#2563EB"/><text x="40" y="310" fill="white" font-size="20">试一份纪要</text><text x="24" y="550" fill="#93C5FD" font-size="18">25–30s</text></g>
+  </g>
+  <text x="60" y="800" fill="#4B5563" font-family="Arial, sans-serif" font-size="24">Reading path: problem → real screen proof → 3-step method → one action</text>
+</svg>

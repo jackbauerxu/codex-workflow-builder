@@ -1,6 +1,6 @@
 {
   "skill": "codex-workflow-builder",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "source": "5分钟入门Codex，一个工作流在抖音赚了5W+; Codex自动化剪辑从0到1，开源我在抖音赚了5W+的剪辑工作流【万字长文】 — xilo2991; Codex + HyperFrames 自动剪辑视频：深度技术解析与工程化最佳实践 — GeekCatX",
   "darwin_compatible": true,
   "test_cases": [
@@ -68,6 +68,41 @@
       "notes": "未显式点名子skill时，也应基于视频日更/周更信号建议路由。"
     },
     {
+      "id": "should-trigger-10",
+      "type": "should_trigger",
+      "prompt": "用这个 AI 产品更新做一条 30 秒 9:16 短视频，风格要极简、以后能持续复用。",
+      "expected_behavior": "应选择 ai-demo 赛道、minimal 预设、脚本模板、镜头 ID 和质量门，再进入分镜；首个预览只能算候选。",
+      "notes": "Production Skill 的核心路径：赛道、预设、知识库和预览 QA。"
+    },
+    {
+      "id": "should-trigger-11",
+      "type": "should_trigger",
+      "prompt": "我有产品包装和使用素材，帮我做一条 25 秒开箱短视频。",
+      "expected_behavior": "应选择 unboxing 赛道，使用开箱提示词和真实素材清单；缺少配件或场景必须标记 missing_asset。",
+      "notes": "开箱模板不能用泛化 B-roll 代替真实物件。"
+    },
+    {
+      "id": "should-trigger-12",
+      "type": "should_trigger",
+      "prompt": "把今天已确认的 AI 融资新闻做成 45 秒新闻卡片视频。",
+      "expected_behavior": "应选择 news 赛道和 Bloomberg 或明确替代预设，先记录事实来源，再使用新闻脚本、来源卡和数据卡。",
+      "notes": "新闻视频必须优先来源与事实边界。"
+    },
+    {
+      "id": "should-trigger-13",
+      "type": "should_trigger",
+      "prompt": "根据我提供的财报资料做一条股票分析视频。",
+      "expected_behavior": "应选择 stock-analysis 赛道，标注数据截止日期、来源和非投资建议；不得预测股价或伪造走势图。",
+      "notes": "金融内容必须把事实与分析边界写入生产配置。"
+    },
+    {
+      "id": "edge-02",
+      "type": "edge_case",
+      "prompt": "不要锁风格，随便混用现有设计 Skill，直接出片。",
+      "expected_behavior": "应要求选择或默认一个 style_preset，并说明其它泛化设计指令不能静默覆盖生产系统的风格锁。",
+      "notes": "防止本地其它设计 Skill 让重复生产的视觉语言漂移。"
+    },
+    {
       "id": "should-not-trigger-01",
       "type": "should_not_trigger",
       "prompt": "Codex里面斜杠命令在哪里？",
@@ -104,5 +139,5 @@
     }
   ],
   "minimum_pass_rate": 0.8,
-  "notes": "全部 should_not_trigger 必须通过；edge case 应说明是否需要先做一次手动流程再沉淀。视频剪辑场景必须保留人工 review 和低置信度留空规则；HyperFrames场景必须保留预览、校验、渲染三段检查。"
+  "notes": "全部 should_not_trigger 必须通过；edge case 应说明是否需要先做一次手动流程再沉淀。视频生产场景必须保留 Production Configuration、单一 style_preset、人工 review、低置信度留空和首个预览候选规则；HyperFrames 场景必须保留预览、校验、渲染三段检查。"
 }

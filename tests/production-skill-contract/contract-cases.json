@@ -1,0 +1,26 @@
+{
+  "suite": "production-skill-contract",
+  "purpose": "Ensure the video workflow is backed by reusable production knowledge, a locked design language, reference assets, and examples rather than a bare SOP.",
+  "cases": [
+    {
+      "id": "P001",
+      "prompt": "用这个 AI 产品更新做一条 30 秒 9:16 短视频，风格要极简、以后能持续复用。",
+      "expect": "selects the ai-demo lane, minimal preset, opening/storytelling/outro/caption templates, relevant shots and an explicit quality gate"
+    },
+    {
+      "id": "P002",
+      "prompt": "我有一段产品录屏和 3 个卖点，做成 TikTok 讲解视频。",
+      "expect": "selects the product lane and a concrete preset, uses product and B-roll prompt forms, keeps subtitle and motion behavior consistent with the chosen style"
+    },
+    {
+      "id": "P003",
+      "prompt": "把今天 AI 融资新闻做成 45 秒新闻卡片视频。",
+      "expect": "selects the news lane, Bloomberg preset or an explicit alternative, verifies facts and cites the news script, shot, layout and reference requirements"
+    },
+    {
+      "id": "P004",
+      "prompt": "不要锁风格，随便混用现有设计 Skill，直接出片。",
+      "expect": "keeps a single selected preset and explains that generic outside-style instructions cannot override the production design language without an explicit style change"
+    }
+  ]
+}

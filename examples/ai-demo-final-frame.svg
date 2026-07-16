@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920" role="img" aria-label="AI demo final-frame reference">
+  <rect width="1080" height="1920" fill="#F6F4EF"/>
+  <rect x="72" y="120" width="936" height="4" fill="#2563EB"/>
+  <text x="72" y="230" fill="#171717" font-family="Arial, sans-serif" font-size="44" font-weight="700">会议结束</text>
+  <text x="72" y="310" fill="#171717" font-family="Arial, sans-serif" font-size="74" font-weight="700">任务别散在聊天里</text>
+  <rect x="72" y="430" width="936" height="880" rx="32" fill="#171717"/>
+  <rect x="120" y="490" width="840" height="90" rx="14" fill="#2C2C2C"/>
+  <circle cx="164" cy="535" r="14" fill="#2563EB"/>
+  <rect x="204" y="514" width="400" height="20" rx="10" fill="#E9E7E0"/>
+  <rect x="120" y="620" width="840" height="210" rx="20" fill="#F0EEE8"/>
+  <text x="164" y="700" fill="#171717" font-family="Arial, sans-serif" font-size="34" font-weight="700">待确认任务</text>
+  <text x="164" y="766" fill="#565656" font-family="Arial, sans-serif" font-size="28">负责人 · 截止时间 · 优先级</text>
+  <rect x="120" y="880" width="840" height="150" rx="20" fill="#2563EB"/>
+  <text x="164" y="970" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="36" font-weight="700">从一份纪要开始</text>
+  <text x="72" y="1510" fill="#171717" font-family="Arial, sans-serif" font-size="48" font-weight="700">把记录变成下一步</text>
+  <text x="72" y="1610" fill="#565656" font-family="Arial, sans-serif" font-size="34">拿一份会议纪要试一次</text>
+  <rect x="72" y="1696" width="936" height="130" rx="24" fill="#171717"/>
+  <text x="112" y="1778" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="36" font-weight="700">查看待确认任务  →</text>
+</svg>

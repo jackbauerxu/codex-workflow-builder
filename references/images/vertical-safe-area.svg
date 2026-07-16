@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920" role="img" aria-label="9:16 safe area reference">
+  <rect width="1080" height="1920" fill="#111827"/>
+  <rect x="72" y="110" width="936" height="268" rx="24" fill="#1D4ED8" opacity=".92"/>
+  <text x="108" y="220" fill="white" font-family="Arial, sans-serif" font-size="44" font-weight="700">TITLE SAFE AREA</text>
+  <text x="108" y="290" fill="white" font-family="Arial, sans-serif" font-size="28">0–16% · hook and category only</text>
+  <rect x="72" y="426" width="936" height="1040" rx="28" fill="#F9FAFB"/>
+  <text x="108" y="980" fill="#111827" font-family="Arial, sans-serif" font-size="52" font-weight="700">PRIMARY VISUAL</text>
+  <text x="108" y="1046" fill="#4B5563" font-family="Arial, sans-serif" font-size="30">one proof, action, chart or product focus</text>
+  <rect x="72" y="1514" width="936" height="292" rx="24" fill="#F97316" opacity=".95"/>
+  <text x="108" y="1640" fill="white" font-family="Arial, sans-serif" font-size="44" font-weight="700">CAPTION SAFE AREA</text>
+  <text x="108" y="1710" fill="white" font-family="Arial, sans-serif" font-size="28">82–94% · 1–2 lines, no controls covered</text>
+</svg>

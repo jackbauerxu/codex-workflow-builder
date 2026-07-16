@@ -116,6 +116,50 @@ Design -> Script -> Storyboard -> HTML Review Page -> Timeline Preview -> Valida
 
 它特别适合浏览器可以表达的内容：字幕、图表、截图、产品页、UI 演示、动效图卡、下三分之一字幕条、数据动画。
 
+## Production System
+
+这一版不再只有“调用工具 → 输出视频”的 SOP。视频任务会先生成一份 `Production Configuration`，明确内容赛道、风格预设、事实来源、脚本模板、镜头 ID 和参考资产，再进入分镜、预览和渲染。
+
+```text
+codex-workflow-builder/
+├── scripts/       # 开场、叙事、收尾、字幕模板
+├── prompts/       # TikTok、AI 演示、产品、开箱、新闻、股票、B-roll
+├── styles/        # Apple、Tesla、Bloomberg、Cyberpunk、Minimal 预设
+├── references/    # 设计语言、镜头库、动效、参考图、分镜和视频接入规范
+├── examples/      # 输入 → 配置 → 分镜 → 最终帧的 Few-shot 示例
+├── remotion/      # 可交给真实 Remotion 工程的生产合同
+└── tests/         # 生产资料与运行时路由的回归测试
+```
+
+### Design System and Style Lock
+
+每条视频必须选择一个风格预设。预设锁定字体、配色、动画节奏、留白、UI 层级和转场词汇；其它设计类 Skill 不能静默覆盖它。只有用户明确更换预设，才重新审查所有场景。
+
+预设名描述的是可迁移的设计特征，不复制品牌的 logo、界面、广告画面、素材或字体。默认使用 `minimal`；新闻/股票可选择 `bloomberg`，产品可选择 `apple`，工程性能内容可选择 `tesla`，技术系统才使用 `cyberpunk`。
+
+### Script and Prompt Libraries
+
+- `scripts/` 固定开场、叙事、收尾、字幕和股票分析的作用，避免每次重写节奏。
+- `prompts/` 覆盖 TikTok、AI 产品演示、产品介绍、开箱、新闻播报、股票分析和 B-roll；每份都要求镜头、时长、事实来源与缺失素材处理。
+- `references/shot-library.md` 提供可直接写进分镜的镜头 ID、构图和时长。
+
+### Reference Assets
+
+仓库内包含自制的 9:16 安全区图、AI 演示/新闻分镜图、构图与动效示例，以及外部参考视频的授权接入规范。它们提供可见的版式、节奏和阅读路径；外部视频、截图和音乐必须由用户提供授权来源，不能被复制进最终视频。
+
+![AI 演示最终帧示例：标题、产品证明、字幕与 CTA 的竖屏层级](examples/ai-demo-final-frame.svg)
+
+> 这是本仓库自制的静态最终帧参考，不宣称已经渲染为 MP4；真正的预览与最终文件仍需由实际项目的验证/渲染命令产生。
+
+### Few-shot Examples
+
+- [AI 功能演示](examples/ai-demo.md)：30 秒 Minimal 录屏讲解。
+- [产品发布](examples/product-launch.md)：30 秒 Apple 风格的真实物件演示。
+- [新闻速览](examples/news-brief.md)：45 秒 Bloomberg 风格的来源优先新闻解释。
+- [股票分析](examples/stock-analysis.md)：45 秒 Bloomberg 风格、以财报/公告为事实边界的解释模板。
+
+每个示例都包含输入、Production Configuration、脚本/镜头骨架和通过条件，告诉使用者“最佳输出长什么样”，而不是只给一段抽象提示词。
+
 ### 4. 父子协作：对接 `codex-remotion-daily-video`
 
 当用户要做的不是单条视频，而是长期的视频日更栏目时，本 Skill 不直接吞掉所有细节，而是作为父 Skill 先定义工作流合同，再把视频专项部分交给 `codex-remotion-daily-video`。
@@ -278,13 +322,29 @@ hyperframes-video/
 ```text
 codex-workflow-builder/
 ├── SKILL.md
-├── test-prompts.json
 ├── agents/
 │   └── openai.yaml
+├── scripts/
+├── prompts/
+├── styles/
+├── references/
+│   ├── images/
+│   ├── storyboards/
+│   └── videos/
+├── examples/
+├── remotion/
+├── tests/
+│   └── production-skill-contract/
+├── test-prompts.json
 └── README.md
 ```
 
 - `SKILL.md`：Codex 实际读取的 Skill 主体。
+- `scripts/`、`prompts/`、`styles/`：视频生产所需的脚本、提示词和被锁定的设计语言；其中包含独立的开箱和股票分析生产路径。
+- `references/`：镜头、构图、动效、参考图/分镜与外部参考视频接入规范。
+- `examples/`：从输入到配置、分镜、最终帧的 Few-shot 参考。
+- `remotion/`：交接给真实 Remotion 工程或子 Skill 的生产合同，不伪造可运行项目。
+- `tests/`：检查生产资料和 Skill 路由是否同时存在。
 - `test-prompts.json`：触发测试、非触发测试和边界测试。
 - `agents/openai.yaml`：Codex UI 中的显示信息。
 - `README.md`：仓库说明文档。
@@ -319,6 +379,9 @@ codex-workflow-builder/
 - 剪映 / CapCut 草稿流程
 - HyperFrames 视频流程
 - Remotion 日更视频父子协作路由
+- AI 产品演示、产品开箱、新闻播报、股票分析和 TikTok/Shorts 生产路径
+- 单一风格预设锁定、脚本/镜头/提示词路由和缺失素材处理
+- 参考资产、最终帧示例、首个预览候选与最终渲染的真实状态
 - 不应触发的简单问答
 - 不适合自动剪辑的高要求原创视频
 - 不适合 HyperFrames 作为主路线的生成式角色视频
@@ -329,6 +392,7 @@ codex-workflow-builder/
 ```bash
 python3 "$HOME/.codex/skills/.system/skill-creator/scripts/quick_validate.py" "$HOME/.codex/skills/codex-workflow-builder"
 jq empty ~/.codex/skills/codex-workflow-builder/test-prompts.json
+bash ~/.codex/skills/codex-workflow-builder/tests/production-skill-contract/focused-check.sh
 ```
 
 ## 设计原则
@@ -340,6 +404,7 @@ jq empty ~/.codex/skills/codex-workflow-builder/test-prompts.json
 5. HyperFrames 路线必须先预览和校验，再做最终渲染。
 6. 视频日更路线先由本 Skill 定义合同，再由 `codex-remotion-daily-video` 处理样片、JSON、模板和渲染检查。
 7. 只有跑通过至少一次的流程，才建议封装成长期 Skill 或自动任务。
+8. 视频生产必须先选内容赛道和单一风格预设，再引用脚本、提示词、镜头和参考资产；不能让泛化设计指令覆盖设计锁。
 
 ## License
 
