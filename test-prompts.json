@@ -91,9 +91,9 @@
     {
       "id": "should-trigger-13",
       "type": "should_trigger",
-      "prompt": "根据我提供的财报资料做一条股票分析视频。",
-      "expected_behavior": "应选择 stock-analysis 赛道，标注数据截止日期、来源和非投资建议；不得预测股价或伪造走势图。",
-      "notes": "金融内容必须把事实与分析边界写入生产配置。"
+      "prompt": "缺少产品画面时，为 30 秒 AI 工具讲解设计一组能解释功能的 B-roll。",
+      "expected_behavior": "应选择 B-roll 提示词，先标记缺少的素材，再给出可授权拍摄或生成的镜头意图；不得把素材假装成已存在。",
+      "notes": "B-roll 必须补足叙事，不得掩盖缺失素材。"
     },
     {
       "id": "edge-02",

@@ -53,7 +53,7 @@ Create this configuration before writing narration, prompts, scenes, or code:
 
 ```yaml
 production:
-  lane: ai-demo | product | unboxing | news | stock-analysis | tiktok
+  lane: ai-demo | product | unboxing | news | tiktok
   style_preset: minimal | apple | tesla | bloomberg | cyberpunk
   format: "1080x1920 / 9:16 / 30fps"
   duration_seconds: 15-60
@@ -65,7 +65,7 @@ production:
 ```
 
 - Infer `lane` only when the request is unambiguous; otherwise ask one concise question. Use `minimal` when no visual preset is requested and disclose the default.
-- Treat `verified_promise` and `fact_sources` as production constraints. No source means no exact metric, price, performance claim, quote, financial conclusion, or news fact in voiceover or graphics.
+- Treat `verified_promise` and `fact_sources` as production constraints. No source means no exact metric, price, performance claim, quote, or news fact in voiceover or graphics.
 - A selected lane, style, scripts, prompts, and shots remain in the production record so the next video can be reproduced.
 
 ### Knowledge Routes
@@ -80,7 +80,6 @@ Load only the files required for the selected lane:
 | Product launch or feature story | `prompts/product.md` |
 | Physical product opening | `prompts/unboxing.md` |
 | News or market event | `prompts/news.md` |
-| Financial/stock analysis | `prompts/stock-analysis.md`, `scripts/stock-analysis.md`, `examples/stock-analysis.md` |
 | Missing supporting visual | `prompts/b-roll.md` |
 | Camera vocabulary | [Shot Library](references/shot-library.md) |
 | Composition, safe areas, animation | `references/design-language.md`, `references/composition-examples.md`, `references/motion-examples.md` |
@@ -103,7 +102,7 @@ Read exactly one file from `styles/` before visual production. The selected pres
 ### Production Sequence
 
 1. Set Production Configuration and lock a preset.
-2. Select opening, storytelling, outro, and caption templates; create a fact manifest before news, financial, product-spec, or claim-heavy content.
+2. Select opening, storytelling, outro, and caption templates; create a fact manifest before news, product-spec, or claim-heavy content.
 3. Build a beat sheet where every line has one `shot_id`, asset need, duration, and factual source or qualification.
 4. Create a storyboard using the selected composition and motion examples. Use real/authorized assets; absent assets become `missing_asset`, not filler footage.
 5. Build a still-frame review and a low-cost preview. The **first preview is a candidate**, never evidence of completion.

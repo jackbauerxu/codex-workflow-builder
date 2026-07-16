@@ -4,7 +4,7 @@
 
 ```yaml
 production:
-  lane: ai-demo | product | news | tiktok
+  lane: ai-demo | product | unboxing | news | tiktok
   style_preset: minimal | apple | tesla | bloomberg | cyberpunk
   format: 1080x1920
   fps: 30

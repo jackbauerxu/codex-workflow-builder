@@ -123,7 +123,7 @@ Design -> Script -> Storyboard -> HTML Review Page -> Timeline Preview -> Valida
 ```text
 codex-workflow-builder/
 ├── scripts/       # 开场、叙事、收尾、字幕模板
-├── prompts/       # TikTok、AI 演示、产品、开箱、新闻、股票、B-roll
+├── prompts/       # TikTok、AI 演示、产品、开箱、新闻、B-roll
 ├── styles/        # Apple、Tesla、Bloomberg、Cyberpunk、Minimal 预设
 ├── references/    # 设计语言、镜头库、动效、参考图、分镜和视频接入规范
 ├── examples/      # 输入 → 配置 → 分镜 → 最终帧的 Few-shot 示例
@@ -135,12 +135,12 @@ codex-workflow-builder/
 
 每条视频必须选择一个风格预设。预设锁定字体、配色、动画节奏、留白、UI 层级和转场词汇；其它设计类 Skill 不能静默覆盖它。只有用户明确更换预设，才重新审查所有场景。
 
-预设名描述的是可迁移的设计特征，不复制品牌的 logo、界面、广告画面、素材或字体。默认使用 `minimal`；新闻/股票可选择 `bloomberg`，产品可选择 `apple`，工程性能内容可选择 `tesla`，技术系统才使用 `cyberpunk`。
+预设名描述的是可迁移的设计特征，不复制品牌的 logo、界面、广告画面、素材或字体。默认使用 `minimal`；新闻可选择 `bloomberg`，产品可选择 `apple`，工程性能内容可选择 `tesla`，技术系统才使用 `cyberpunk`。
 
 ### Script and Prompt Libraries
 
-- `scripts/` 固定开场、叙事、收尾、字幕和股票分析的作用，避免每次重写节奏。
-- `prompts/` 覆盖 TikTok、AI 产品演示、产品介绍、开箱、新闻播报、股票分析和 B-roll；每份都要求镜头、时长、事实来源与缺失素材处理。
+- `scripts/` 固定开场、叙事、收尾和字幕的作用，避免每次重写节奏。
+- `prompts/` 覆盖 TikTok、AI 产品演示、产品介绍、开箱、新闻播报和 B-roll；每份都要求镜头、时长、事实来源与缺失素材处理。
 - `references/shot-library.md` 提供可直接写进分镜的镜头 ID、构图和时长。
 
 ### Reference Assets
@@ -156,7 +156,6 @@ codex-workflow-builder/
 - [AI 功能演示](examples/ai-demo.md)：30 秒 Minimal 录屏讲解。
 - [产品发布](examples/product-launch.md)：30 秒 Apple 风格的真实物件演示。
 - [新闻速览](examples/news-brief.md)：45 秒 Bloomberg 风格的来源优先新闻解释。
-- [股票分析](examples/stock-analysis.md)：45 秒 Bloomberg 风格、以财报/公告为事实边界的解释模板。
 
 每个示例都包含输入、Production Configuration、脚本/镜头骨架和通过条件，告诉使用者“最佳输出长什么样”，而不是只给一段抽象提示词。
 
@@ -340,7 +339,7 @@ codex-workflow-builder/
 ```
 
 - `SKILL.md`：Codex 实际读取的 Skill 主体。
-- `scripts/`、`prompts/`、`styles/`：视频生产所需的脚本、提示词和被锁定的设计语言；其中包含独立的开箱和股票分析生产路径。
+- `scripts/`、`prompts/`、`styles/`：视频生产所需的脚本、提示词和被锁定的设计语言；其中包含独立的开箱生产路径。
 - `references/`：镜头、构图、动效、参考图/分镜与外部参考视频接入规范。
 - `examples/`：从输入到配置、分镜、最终帧的 Few-shot 参考。
 - `remotion/`：交接给真实 Remotion 工程或子 Skill 的生产合同，不伪造可运行项目。
@@ -379,7 +378,7 @@ codex-workflow-builder/
 - 剪映 / CapCut 草稿流程
 - HyperFrames 视频流程
 - Remotion 日更视频父子协作路由
-- AI 产品演示、产品开箱、新闻播报、股票分析和 TikTok/Shorts 生产路径
+- AI 产品演示、产品开箱、新闻播报和 TikTok/Shorts 生产路径
 - 单一风格预设锁定、脚本/镜头/提示词路由和缺失素材处理
 - 参考资产、最终帧示例、首个预览候选与最终渲染的真实状态
 - 不应触发的简单问答
