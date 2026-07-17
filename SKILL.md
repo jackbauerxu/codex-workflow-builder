@@ -1,56 +1,45 @@
 ---
 name: codex-workflow-builder
-description: Convert a repeated computer task, content-production routine, business workflow, automated short-video editing routine, HyperFrames or Remotion video routine, or "make this into a Codex Skill / automation" request into a concrete Codex project workflow with inputs, folder structure, execution steps, quality checks, and optional Skill or scheduled-task packaging. Use when the user wants to turn a fuzzy recurring process into a reusable Codex workflow. Do not use for one-off factual Q&A, generic Codex tutorials, or tasks that only need a simple answer.
+description: Use when the user wants to turn a fuzzy recurring computer task, content-production routine, business workflow, automated short-video editing routine, HyperFrames or Remotion video routine, or Skill/automation request into a reusable Codex workflow. Do not use for one-off factual Q&A, generic Codex tutorials, or tasks that only need a simple answer.
 ---
 
 # Codex Workflow Builder
 
-Sources:
+把“说不清但反复做”的任务变成可以检查、复跑和交接的 Codex 项目工作流。它负责父级流程合同；视频专项细节交给 `codex-remotion-daily-video`，或按本仓库的真实 Remotion starter 运行。
 
-- X article by xilo2991, "5分钟入门Codex，一个工作流在抖音赚了5W+", published 2026-06-25. Original link: https://x.com/xilo2991/status/2070051136187621452
-- X article by xilo2991, "Codex自动化剪辑从0到1，开源我在抖音赚了5W+的剪辑工作流【万字长文】", published 2026-07-05. Original link: https://x.com/xilo2991/status/2073752063591473242
-- X article by GeekCatX, "Codex + HyperFrames 自动剪辑视频：深度技术解析与工程化最佳实践", published 2026-07-06. Original link: https://x.com/GeekCatX/status/2074182098626523388
+## Sources and boundaries
+
+方法来自三篇 X 长文：
+
+- xilo2991 的 Codex 工作流与自动化剪辑文章。
+- GeekCatX 的 Codex + HyperFrames 工程化视频文章。
+
+原文链接、引用边界和详细应用案例见 [workflow-patterns.md](references/workflow-patterns.md)。不要把来源文章中的单次案例误当成固定题材列表，也不要把工作流包装成精品电影制作承诺。
 
 ## R - Reading
 
-> "Skill 的作用就是把很多重复、复杂的流程固定下来。这样你下次执行同样的任务时，只需要调出Skills就可以一键执行。"
->
-> "如果你想要设置一个好用的自动化任务...整个流程的每一个环节你都要写得非常清楚，甚至说是做成 skill，然后再让 Codex 去自动调用。"
-
-> "这套工作流的定位是自动生产，不是精品创作。"
->
-> "宁可留空素材，也不要用无关素材硬凑。"
-
-> "Codex 负责「编排 + 写代码 + 审阅闭环」，HyperFrames 负责「把 HTML 变成确定性 MP4」。"
+核心判断：Skill 不是一次性答案，而是把目标、输入、输出、目录、步骤、人工判断和质量门固定下来，让下一次执行不必重新发现流程。
 
 ## I - Method
 
-Treat Codex as a project-based task runner, not only a chat window. A useful workflow has five parts:
+先判断任务是否重复、文件化、多步骤或有商业价值；再建立项目目录和 `Workflow Contract`；最后决定保留为提示词、项目 runbook、Skill，还是在至少一次人工验收后排期。
 
-1. A concrete task that recurs or has multiple moving parts.
-2. A project folder where every input, intermediate file, and final output has a known place.
-3. A step-by-step runbook Codex can execute without rediscovering the process.
-4. A review loop: check output quality, let the user correct direction, then refine the runbook.
-5. A packaging decision: keep it as a reusable prompt, turn it into a Skill, or schedule it as a recurring task.
+每一步都必须有：
 
-The goal is not to describe Codex features. The goal is to make a user's real workflow executable, repeatable, and easy to inspect.
+```markdown
+### Step N - Name
+- Input:
+- Action:
+- Output:
+- Check:
+- If blocked:
+```
 
-For short-video editing, choose a route by the actual source of the visuals:
-
-- Reference-video draft route: use a proven reference video as the structure, analyze its shot rhythm, match the user's own asset library to each shot, generate voiceover and subtitles, then assemble an editable Jianying/CapCut draft.
-- HyperFrames render route: use Codex to orchestrate script, storyboard, HTML visual scenes, subtitle timing, preview, validation, and deterministic MP4 rendering through HyperFrames.
-- Daily Remotion route: use `codex-remotion-daily-video` when the user wants repeatable knowledge, tutorial, book-summary, product-explainer, data-explainer, quote, podcast-clip, product-update, or course-clip videos as a daily production line.
-- Generative-video asset route: when an essential visual is absent and the user accepts a generated asset, use the Seedance-style prompt and continuity workflow below. It plans or validates generated source material; it does not substitute for a real preview or final render.
-
-The user remains responsible for source material, final review, and manual fixes where automated matching confidence is low.
+视频任务按真实画面来源选择路线：参考视频剪映/CapCut 草稿、HyperFrames HTML 渲染、Remotion 日更生产线，或受控的生成式视频资产路线。详细路线操作见 [video-workflows.md](references/video-workflows.md)。
 
 ## Production System for Video Work
 
-Workflow steps alone do not make a repeatable video product. For video requests, use the bundled production knowledge before designing a storyboard. The goal is consistent, inspectable output—not a generic script that changes aesthetic rules on every run.
-
-### Production Configuration
-
-Create this configuration before writing narration, prompts, scenes, or code:
+视频请求不能只写“调用工具 → 输出视频”。先建立可复现的 `Production Configuration`：
 
 ```yaml
 production:
@@ -72,164 +61,64 @@ production:
   shot_ids: []
 ```
 
-- Write `content_format` from the user's project rather than forcing it into a fixed list. Use `minimal` when no visual preset is requested and disclose the default.
-- Treat `verified_promise` and `fact_sources` as production constraints. No source means no exact metric, price, performance claim, quote, or news fact in voiceover or graphics.
-- A selected content format, style, scripts, prompts, and shots remain in the production record so the next video can be reproduced.
-- `generated` and `hybrid` modes require an honest generated-asset status. A prompt, an imagined frame, or a model thumbnail is never a rendered video; only an `accepted` asset with a real output path can enter the final timeline.
+`content_format` 是开放字段，不把项目硬塞进固定 lane。没有事实来源时，不能写精确数字、价格、性能、新闻事实或未经证实的结果。`planned` 和 `not_rendered` 资产不能进入最终时间线。
 
 ### Knowledge Routes
 
-Load only the files required for the selected content format:
+只读取当前请求需要的资料：
 
 | Need | Read |
 | --- | --- |
-| Hooks, explanation beats, CTA, captions | `scripts/opening.md`, `scripts/storytelling.md`, `scripts/outro.md`, `scripts/captions.md` |
-| Project structure and template selection | `scripts/README.md` plus one matching project template |
-| Fast social viewpoint or tutorial | `prompts/tiktok.md` |
-| AI or SaaS walkthrough | `prompts/ai-demo.md` |
-| Product launch or feature story | `prompts/product.md` |
-| Physical product opening | `prompts/unboxing.md` |
-| News or market event | `prompts/news.md` |
-| Missing supporting visual | `prompts/b-roll.md` |
-| Seedance or other generated video asset | `prompts/generative-video.md`, `references/generative-video-production.md`, `examples/generative-video-sequence.md` |
-| Camera vocabulary | [Shot Library](references/shot-library.md) |
-| Composition, safe areas, animation | `references/design-language.md`, `references/composition-examples.md`, `references/motion-examples.md` |
-| Input/output patterns | [Few-shot examples](examples/) |
-| Remotion handoff | `remotion/production-contract.md` |
+| 工作流来源、应用、合同与打包 | [workflow-patterns.md](references/workflow-patterns.md) |
+| 剪映/CapCut、HyperFrames、Remotion 运行细节 | [video-workflows.md](references/video-workflows.md) |
+| 开场、叙事、收尾、字幕 | `scripts/opening.md`, `scripts/storytelling.md`, `scripts/outro.md`, `scripts/captions.md` |
+| 项目脚本与题材模板 | `scripts/README.md` 加一个最接近的项目模板 |
+| TikTok、AI 演示、产品、开箱、新闻、B-roll | 对应的 `prompts/*.md` |
+| Seedance 或其他生成式视频资产 | `prompts/generative-video.md`, `references/generative-video-production.md`, `examples/generative-video-sequence.md` |
+| 镜头、构图、动效 | `references/shot-library.md`, `references/composition-examples.md`, `references/motion-examples.md` |
+| Remotion 交接合同 | `remotion/production-contract.md` |
 
 ### Script Library
 
-The project templates in `scripts/` are **not a closed taxonomy**. AI demos, product videos, unboxing, news, TikTok/Shorts, and B-roll are useful starting points, not a boundary on what may be produced.
-
-Choose the closest project template by the audience promise and the available proof, then combine it with the four base templates. When no template exactly fits, keep the base templates and record a **custom beat map**: hook, proof sequence, action or insight, evidence/asset needs, uncertainty or qualification, and one CTA. Do not invent a new genre label as a substitute for this beat map.
+`scripts/` 的 AI 演示、产品、开箱、新闻、TikTok/Shorts、B-roll、教程、案例、对比和趋势模板只是可组合起点，不是封闭题材范围（not a closed taxonomy）。没有完全匹配的模板时，保留四个基础模板并记录 `custom beat map`：hook、proof、action/insight、evidence/asset needs、uncertainty/qualification、CTA。不能用一个泛化的旁白代替 beat map。
 
 ### Generative-video asset route
 
-Use this route only for a visual asset the user accepts as generated; never silently replace an absent real asset with it. The route integrates the source-identity, equipment grammar, natural-imperfection, timeline, audio, and end-anchor method from `realistic-video-prompting` / [zhouwei713/seedance-prompt](https://github.com/zhouwei713/seedance-prompt).
+只有用户接受生成式资产、且真实素材不足时才使用。它融合 `realistic-video-prompting` / [zhouwei713/seedance-prompt](https://github.com/zhouwei713/seedance-prompt) 的方法，但不把 prompt、缩略图或设想画面说成已经交付的视频。
 
-1. Record **Source Identity**: who recorded it, why, device/era, subject/place, and emotional intent. Translate emotional words into visible light, sound, material, and behavior.
-2. Use `prompts/generative-video.md` to produce the seven sections, including one coherent device grammar and one natural imperfection per beat.
-3. For more than one generated clip, create a **Continuity Ledger** before prompts. Lock identity, wardrobe, place, time/weather, camera grammar, sound bed, and each clip's first/last-frame anchors.
-4. Keep the selected `style_preset` in control of export typography, layout, subtitles, and transitions. The generated segment's camera grammar is local texture, not a second visual preset.
-5. Store rights, status, and the real output path in the asset manifest. `planned` and `not_rendered` assets cannot pass a render or delivery quality gate.
+1. 记录 **Source Identity**：拍摄者、原因、设备/年代、主体/地点和情绪意图。
+2. 用 `prompts/generative-video.md` 写七段式 prompt，保持一套设备语法，并为每个 beat 设置一个自然不完美事件。
+3. 多段生成前写 **Continuity Ledger**，锁定身份、衣着、地点、时间/天气、相机语法、声音和首末帧锚点。
+4. 导出排版、字体、字幕和转场仍由唯一 `style_preset` 控制；生成片段的相机语法只是局部质感。
+5. 在资产清单中记录权利、状态和真实 `output_path`；只有通过 QA 的 `accepted` 资产能进入最终时间线。
 
 ### Style Lock
 
-Read exactly one file from `styles/` before visual production. The selected preset owns typography, palette, grid, whitespace, subtitle behavior, movement, and transition vocabulary for the entire video.
-
-**No generic-style override**: do not silently mix in another design Skill's default look, a random reference, a second preset, or decorative effects. A change is allowed only when the user explicitly changes `style_preset`; then re-check every scene against the new preset. The named presets describe transferable design traits only—never reproduce a company's logo, proprietary UI, source footage, soundtrack, or exact campaign composition.
+视觉生产前必须读取 `styles/` 中恰好一个预设。预设锁定字体、配色、网格、留白、字幕、运动和转场；**No generic-style override**：其它设计 Skill 不能静默覆盖。默认 `minimal`，新闻可选 `bloomberg`，产品可选 `apple`，性能内容可选 `tesla`，技术系统可选 `cyberpunk`。用户明确更换预设后，重新检查每个场景；预设不复制品牌 logo、专有 UI、素材、音乐或广告构图。
 
 ### Reference Assets
 
-- Use `references/images/vertical-safe-area.svg` before laying out vertical text and subtitles.
-- Use the SVG storyboards and `references/composition-examples.md` as self-authored layout references, not as visual material to trace.
-- Use `references/motion-examples.md` to select a limited motion vocabulary. If motion does not clarify time, hierarchy, causality, or focus, remove it.
-- For external reference video, follow `references/videos/README.md`: record rights, learn only reusable rhythm/framing principles, and never copy footage, edit sequence, music, logos, or voice.
+先读 `references/images/vertical-safe-area.svg`，再布局竖屏文字；用自制 SVG 分镜、构图和动效文档理解阅读路径，不把它们当成待追踪的素材。外部视频只记录授权并学习可迁移的节奏/构图原则，不能复制画面、剪辑序列、音乐、logo 或声音。
+
+### Shot Library
+
+需要写分镜时读取 `references/shot-library.md`，使用其中的 shot ID、景别、构图、动作和建议时长；每个 beat 只绑定一个 shot ID。
 
 ### Production Sequence
 
-1. Set Production Configuration and lock a preset.
-2. Select opening, storytelling, outro, and caption templates; create a fact manifest before news, product-spec, or claim-heavy content.
-3. When a generated asset is requested, write its Source Identity and, for a sequence, its Continuity Ledger before the beat sheet.
-4. Build a beat sheet where every line has one `shot_id`, asset need, duration, and factual source or qualification.
-5. Create a storyboard using the selected composition and motion examples. Use real/authorized assets; absent assets become `missing_asset`, not filler footage.
-6. Build a still-frame review and a low-cost preview. The **first preview is a candidate**, never evidence of completion.
-7. Run the production quality gate: style lock, title/subtitle safe area, source accuracy, shot-to-narration match, motion restraint, generated-asset status/rights, asset rights, and render/preview existence. Repair only failed dimensions, then record the result.
+1. 建立 `Production Configuration` 并锁定一个预设。
+2. 选择 opening、storytelling、outro、captions 和一个项目模板；事实密集内容先建 fact manifest。
+3. 生成式资产先写 Source Identity 和 Continuity Ledger。
+4. 写 beat sheet：每行一个 `shot_id`、资产需求、时长和来源/限定。
+5. 用选定的构图与动效做 storyboard；缺素材写 `missing_asset`，不拿无关素材填空。
+6. 先做静帧和低成本预览；**first preview is a candidate**，不是完成证据。
+7. 通过风格锁、安全区、事实、画音匹配、动作克制、权利、生成资产状态和真实渲染产物 QA 后才交付。
 
 ### Few-shot examples
 
-Before inventing a structure, read the closest complete example:
+先读最接近的完整示例：`examples/ai-demo.md`、`examples/product-launch.md`、`examples/news-brief.md`；涉及生成视觉时再读 `examples/generative-video-sequence.md`。只适配输入、已验证事实、预设、beat 和镜头，不复制示例中的品牌、主张、图像或措辞。
 
-- `examples/ai-demo.md` with `examples/ai-demo-final-frame.svg`
-- `examples/product-launch.md`
-- `examples/news-brief.md`
-- `examples/generative-video-sequence.md` when generated visuals are in scope
-
-Adapt the input, verified facts, selected preset, script beats, and shots. Do not copy brand names, claims, imagery, or wording from an example.
-
-## A1 - Article Applications
-
-### Ecommerce video workflow
-
-- Problem: producing ecommerce short videos required repeated work across trend analysis, material selection, voice, music, and subtitle alignment.
-- Method: convert the whole production line into a Codex-executed workflow.
-- Result: output efficiency increased because Codex could repeatedly follow the same production path.
-
-### Content article workflow
-
-- Problem: creating a post required outlining, drafting, cover generation, and illustrations.
-- Method: let Codex handle the full project inside one workspace, then let the human adjust details at the end.
-- Result: the article became a reusable content-production pattern rather than a one-off chat.
-
-### Daily brief workflow
-
-- Problem: daily information collection and topic selection were recurring tasks.
-- Method: define when to run, what sources to use, where to save results, and how to notify the user.
-- Result: the repeated daily task can become an automation after the process is clear.
-
-### Reference-video editing workflow
-
-- Problem: manually recreating the rhythm of a high-performing short video requires repeated shot cutting, material search, timing, subtitle alignment, and draft assembly.
-- Method: put a reference video and a categorized asset library into a project workspace; let Codex produce a shot recipe, match reusable assets, generate voiceover and subtitles, and create an editable Jianying/CapCut draft.
-- Result: the workflow is suitable for high-volume mixed-material videos such as ecommerce, marketing, and simple montage content.
-
-### HyperFrames rendering workflow
-
-- Problem:口播、教程、产品讲解和信息图视频的后期工作，常常卡在字幕对齐、动效叠层、标注、时间线调整和重复渲染。
-- Method: let Codex design the storyboard and write HTML/CSS/JS composition files, then let HyperFrames preview, validate, and render deterministic MP4 output.
-- Result: the workflow is suitable for repeatable explainer videos, article-to-video, product promos, GitHub/README demos, data-driven charts, and CI-friendly video generation.
-
-### Daily Remotion video workflow
-
-- Problem: knowledge, book-summary, tutorial, product-explainer, and data-explainer creators often repeat the same video structure every day.
-- Method: first use this skill to define the Workflow Contract, then route the stable video-production details to `codex-remotion-daily-video`.
-- Result: the workflow becomes a parent-child setup: this skill owns the reusable process contract; `codex-remotion-daily-video` owns video specialization, JSON schema, HyperFrames validation, Remotion templates, and render checks.
-
-## A2 - Trigger Scenarios
-
-Use this skill when the user says or implies:
-
-- "把这个流程做成 Codex 工作流 / Skill / 自动化任务"
-- "我每次都要做这些步骤，帮我固定下来"
-- "这个任务能不能让 Codex 自动执行"
-- "帮我设计一个项目目录和执行流程"
-- "我有一个业务流程，想让 Codex 跑起来"
-- "我有参考视频和素材库，帮我自动生成剪映草稿"
-- "把这个爆款视频结构做成自己的带货视频流程"
-- "帮我搭一个自动化剪辑 Skill"
-- "用 Codex + HyperFrames 做一个可复现的视频生成流程"
-- "用 Codex + HyperFrames + Remotion 做视频日更生产线"
-- "把讲书号 / 数据科普 / 工具教程 / 产品讲解做成每天可复用的视频模板"
-- "先把视频生产流程规划清楚，再交给 codex-remotion-daily-video 落地"
-- "把文章 / PDF / README 做成带字幕和动效的短视频"
-- "帮我设计 HyperFrames 的预览、校验、渲染工作流"
-- "turn this process into a Codex workflow / skill / automation"
-
-Do not use it when:
-
-- The user only asks where a button is or how one Codex feature works.
-- The user asks for a single direct output and no reusable process is needed.
-- The task requires reading a specific external source first; fetch the source before designing the workflow.
-- The user wants high-end original cinematography, delicate emotional pacing, or heavily art-directed transitions; recommend a human-led creative workflow instead.
-- The user wants AI drama, generated character performance, or image-to-video-heavy work; route to a media generation workflow rather than HyperFrames-first rendering.
-
-## E - Execution
-
-### 1. Identify Workflow Worthiness
-
-Ask or infer:
-
-- What task should be repeated?
-- What input does the user provide each time?
-- What output should exist at the end?
-- How often does it run: ad hoc, daily, weekly, per project, or per file?
-- What human judgment must stay in the loop?
-
-If the task is not recurring and has fewer than three meaningful steps, solve it directly instead of overbuilding a workflow.
-
-### 2. Create the Workflow Contract
-
-Write a compact contract before implementation:
+## Workflow Contract
 
 ```markdown
 ## Workflow Contract
@@ -244,11 +133,21 @@ Write a compact contract before implementation:
 - Stop conditions:
 ```
 
-Make the trigger operational, such as "when the user drops 10 product clips into `/inputs/raw-clips`" rather than "when making videos."
+触发必须可执行，例如“用户把 10 个产品片段放入 `/inputs/raw-clips`”，而不是“制作视频时”。
+
+## E - Execution
+
+### 1. Identify Workflow Worthiness
+
+回答：重复什么任务？每次输入是什么？最终输出是什么？多久运行一次？哪些判断必须留给人？如果任务不是重复的、少于三个有意义的步骤，直接解决，不要过度封装。
+
+### 2. Create the Workflow Contract
+
+先写合同，再设计目录、脚本、分镜或代码。输入检查、输出检查和人工 review 是每条路线的最低质量门。
 
 ### 3. Design the Project Workspace
 
-Use a predictable folder shape unless the existing project already has a better convention:
+默认目录：
 
 ```text
 project-name/
@@ -260,432 +159,39 @@ project-name/
 └── README.md or RUNBOOK.md
 ```
 
-Use:
+稳定素材放 `assets/`，每次中间产物放日期目录，交付物只放 `outputs/`。当合同满足日更/周更短视频、结构化内容 JSON、Remotion composition 和 MP4 输出条件时，把专项细节交给 `codex-remotion-daily-video`。
 
-- `inputs/` for user-provided source material.
-- `working/` for intermediate drafts, extracted data, or temporary structured files.
-- `outputs/` for final deliverables.
-- `prompts/` for reusable prompts or role instructions.
-- `logs/` for run notes, decisions, or execution summaries.
+### 4. Mandatory Video Production Environment Bootstrap
 
-If the workflow will become a Skill, keep the reusable instructions in the skill's `SKILL.md` and only keep project-specific files in the project folder.
+请求包含 preview、still frame、可编辑草稿或 MP4 时，先检查包管理器、锁文件、Node、浏览器运行时、FFmpeg 和对应 CLI；缺依赖时只在项目内安装并通过权限机制下载。运行诊断后才渲染。预览、脚本、storyboard 或 React composition 都不是 MP4，必须检查真实文件存在、非空、格式正确。失败时报告具体缺失工具和安全下一步，不虚构完成。
 
-### Parent-Child Skill Routing
-
-Use this skill as the parent when the user starts with a fuzzy repeatable process. After the Workflow Contract is clear, route specialist work to a child skill instead of copying every specialist rule into this skill.
-
-Route to `codex-remotion-daily-video` when the workflow contract says:
-
-- Goal: daily or weekly repeatable short-video production.
-- Inputs: article, book note, product note, data point, tutorial outline, quote, podcast clip, or product update.
-- Outputs: structured content JSON, HyperFrames sample brief, Remotion composition, rendered MP4, or video production runbook.
-- Repetition pattern: one or more videos per day/week, same format or same visual system.
-- Human review: approve hook, content format, sample direction, still frame, final MP4, or template improvement.
-
-Parent output before routing:
-
-```markdown
-## Workflow Contract
-- Goal:
-- Trigger:
-- Inputs:
-- Outputs:
-- Project folder:
-- Steps:
-- Human review points:
-- Quality checks:
-- Stop conditions:
-- Child skill: codex-remotion-daily-video
-```
-
-Then use `codex-remotion-daily-video` for:
-
-- Engine choice: HyperFrames validation, Remotion production, or both.
-- Content format examples: book-summary, product-explainer, data-explainer, tool-tutorial, opinion-explainer; add a custom beat map when none is exact.
-- Content JSON schema and daily-changing fields.
-- Reusable video modules.
-- Still-frame checks, render checks, and review loop.
-
-Keep the boundary clean: this skill decides whether the work deserves a reusable workflow and defines the contract; the child skill decides how the repeatable video production line should operate.
-
-## Mandatory Video Production Environment Bootstrap
-
-When a video request asks for a preview, still frame, editable draft, or MP4, environment preparation is part of execution. Do not stop after writing a workflow plan or project skeleton.
-
-Before writing the final composition:
-
-1. Select the route: HyperFrames, Remotion, or Jianying/CapCut.
-2. Run a non-destructive preflight in the actual project folder. Check the package manager, project lockfile, Node.js runtime, browser runtime, FFmpeg, and the route-specific CLI or library.
-3. If a required dependency is missing, bootstrap it automatically before rendering:
-   - HyperFrames: install the project-local JavaScript dependencies and the browser/FFmpeg runtime required by the HyperFrames diagnostics.
-   - Remotion: use the existing lockfile and package manager to install project dependencies, then prepare the browser/compositor and FFmpeg runtime required by the render command.
-   - Jianying/CapCut: verify that the editor is available. If a desktop editor is missing, create the editable draft and report the manual handoff; do not pretend that an MP4 was rendered.
-4. If a required dependency is present but outdated, update it to the latest stable compatible version before rendering. Reuse the lockfile where possible and validate any major-version change.
-5. Prefer project-local dependencies and the package manager selected by the lockfile. Do not use `sudo`, overwrite system tools, or install unrelated software.
-6. Network downloads and system-level installs must go through the environment's approval mechanism. Do not silently bypass permissions. If installation is approved, continue automatically and record what was installed.
-7. Verify the installed versions and run the route's diagnostics before creating the final video. Only report success after the preview/render command produces the expected file.
-8. Reuse an already valid environment on later runs; do not reinstall dependencies unnecessarily unless a newer stable version is required.
-
-If bootstrap fails, stop before rendering and report the exact missing tool, failed command, and the next safe action. Never claim that a video was generated when only a script, brief, draft, or composition file exists.
-
-For automated short-video editing, use this specialized shape:
+真实可运行的最小 Remotion 参考位于 `examples/remotion-starter/`，其本地顺序是：
 
 ```text
-video-project/
-├── AGENTS.md
-├── assets/
-│   ├── appearance/
-│   ├── function/
-│   ├── scene/
-│   └── human-shot/
-└── work/
-    └── YYYY-MM-DD/
-        ├── reference/
-        ├── reference_segments/
-        ├── keyframes/
-        ├── matched_assets/
-        ├── voiceover/
-        ├── subtitles/
-        ├── preview/
-        └── jianying_draft/
+npm ci -> npm run typecheck -> npm run render:still -> npm run render:smoke -> npm run verify:artifacts
 ```
 
-Put stable, reusable materials in `assets/`. Put each new video's reference file, intermediate files, and final draft under one dated `work/` folder. Include an `AGENTS.md` that states project goal, target platform, video length, tone, output format, asset rules, and review standards.
+### 5. Package and Review
 
-For HyperFrames projects, use this shape:
+至少一次人工验收通过后，选择可复用提示词、项目 runbook、Skill 或定时任务。报告工作流名、文件位置、下次运行方式、用户首先要看的产物和仍需人工判断的部分。不要在依赖未安装、预览失败或真实产物缺失时声称视频完成。
 
-```text
-hyperframes-video/
-├── AGENTS.md
-├── index.html
-├── assets/
-│   ├── audio/
-│   ├── images/
-│   ├── video/
-│   └── data/
-├── scripts/
-├── outputs/
-│   ├── preview/
-│   └── final/
-└── notes/
-    ├── script.md
-    ├── storyboard.md
-    └── review-notes.md
-```
+## Quality Gates and boundaries
 
-Keep brand style, aspect ratio, motion vocabulary, subtitle rules, and render quality in `AGENTS.md` so future videos inherit the same defaults.
+- 输入：必需文件、字段、来源和权利存在。
+- 输出：交付物格式、路径、时长、分辨率和可解析性符合承诺。
+- 内容：事实有来源，标题/字幕在安全区，镜头与叙事匹配，风格只有一个预设。
+- 生产：低置信度素材标记 `missing_asset`；生成资产保留状态、权利和真实路径。
+- Review：报告变更、产物、失败门和用户必须做的判断。
 
-### 4. Convert the Process Into Steps
+不要为单次问答、按钮位置、没有目标/输出标准的任务或强依赖真实表演和复杂情绪的高级原创大片设计工作流。自动化编辑定位是可规模化生产，不承诺精品创作；HyperFrames 强项是浏览器可表达的字幕、图表、截图、UI 和动效，而不是生成角色表演。
 
-For each step, define:
+## Related references
 
-- action: what Codex should do;
-- tool or file: what it should read, write, or run;
-- completion standard: how to know the step is done;
-- handoff: what the next step receives.
-
-Prefer this format:
-
-```markdown
-### Step N - Name
-- Input:
-- Action:
-- Output:
-- Check:
-- If blocked:
-```
-
-Keep steps small enough that a user can interrupt and redirect without losing the whole run.
-
-### 5. Add Quality Gates
-
-Every workflow needs at least three checks:
-
-- Input check: required files or fields exist.
-- Output check: final deliverable matches the promised format.
-- Review check: Codex reports what changed, where outputs live, and what still needs human judgment.
-
-For content workflows, include checks for audience fit, factual claims, tone, structure, and asset completeness.
-For file workflows, include checks for filenames, expected counts, parse success, and no empty outputs.
-For recurring workflows, include checks for date range, duplicate handling, save location, and notification target.
-For HyperFrames workflows, include checks for composition contract validity, asset paths, subtitle safe area, preview review, deterministic output, and final render location.
-
-### 6. Package the Workflow
-
-Choose the lightest durable form:
-
-- Reusable prompt: use when the process is short and still changing.
-- Project runbook: use when file layout and handoff matter.
-- Skill: use when the user will ask for the same workflow repeatedly.
-- Scheduled task: use when timing matters and the workflow already runs reliably.
-
-If creating a Skill, include:
-
-- clear YAML `name` and `description`;
-- trigger scenarios;
-- inputs and required assumptions;
-- exact execution steps;
-- quality gates;
-- failure and handoff behavior;
-- `test-prompts.json` with positive, negative, and edge cases.
-
-### 7. Return a Practical Deliverable
-
-End with:
-
-- the workflow name;
-- where files were created;
-- how to run it next time;
-- what the user should inspect first;
-- whether it is ready for Skill packaging or scheduled execution.
-
-## Short-Video Editing Workflow
-
-Use this section when the user's reusable workflow is automated editing from a reference video.
-
-### Fit Check
-
-Proceed when:
-
-- The target is high-volume mixed-material video: ecommerce, marketing, simple montage, product demo, or lightweight Vlog.
-- The user can provide a reference video and their own material library.
-- The expected output is an editable Jianying/CapCut draft, not a final untouched masterpiece.
-
-Do not present this as a fit when:
-
-- The user needs precise original storytelling, nuanced performance, or complex visual language.
-- The available asset library is too thin for matching.
-- The user cannot review the generated draft before publishing.
-
-### Required Inputs
-
-Collect or create:
-
-- reference video path;
-- asset library path;
-- target platform and aspect ratio;
-- target duration or acceptable range;
-- voiceover provider or "no voiceover";
-- subtitle style and safe area preferences;
-- Jianying/CapCut draft location;
-- product or topic constraints;
-- review standard: what counts as acceptable, missing, or wrong.
-
-### Step 1 - Prepare Tools and Project
-
-Check that the environment has:
-
-- FFmpeg for video splitting, frame extraction, transcoding, and assembly;
-- Python 3.8 or newer for workflow scripts;
-- a voiceover option, such as Doubao voice model or a local voice cloning tool when the user explicitly wants that;
-- Jianying/CapCut desktop if the final output is an editable draft.
-
-Create the project folders before processing files. Never reorganize the user's original asset library unless asked. Copy selected assets into the current `work/` folder.
-
-### Step 2 - Analyze the Reference Video
-
-Split the reference video into shots, extract keyframes, and create a central `recipe.json`.
-
-`recipe.json` should include:
-
-- shot index;
-- start and end time;
-- duration;
-- keyframe path;
-- detected text or transcript when available;
-- visual notes such as scene, motion, subject, framing, color, brightness, and pace;
-- downstream requirement for the replacement shot.
-
-Ask the user to inspect obvious segmentation errors. If a complete shot is split incorrectly or two shots are merged, adjust before matching materials.
-
-### Step 3 - Plan and Match Materials
-
-Create two planning files:
-
-- `fragment_plan.json`: what each shot needs, including scene, action, framing, material type, and forbidden matches;
-- `matches.json`: selected material for each shot, match score, confidence, and whether the choice is a fallback.
-
-Match by useful visual signals first: color, brightness, composition, subject, motion, scene type, and shot size. Add variety rules so the same material or same-looking shot does not repeat too often.
-
-Quality rule: leave a shot unfilled when confidence is too low. Do not fill a slot with an unrelated material just to complete the timeline. Mark it as `missing_asset` and tell the user what kind of asset to add.
-
-### Step 4 - Generate Voiceover and Subtitles
-
-Extract or draft the script, then ask the user to review the text before generating audio. After audio generation:
-
-- measure the real audio duration;
-- adjust shot durations so voice and picture remain aligned;
-- generate subtitle files;
-- check that subtitles do not cover key product or face areas.
-
-If the reference video's text extraction is uncertain, keep a manual review point before audio generation.
-
-### Step 5 - Build Preview and Jianying/CapCut Draft
-
-Generate a preview video first when possible. Then build the editable draft with strict file references:
-
-- use absolute material paths required by the draft format;
-- confirm every referenced file exists;
-- create fresh draft identifiers for content, metadata, and root index;
-- keep IDs internally consistent;
-- do not collide with existing drafts;
-- preserve copied working materials so the draft opens later.
-
-The first draft can take longer because draft metadata is strict. Treat any open failure as a format or path issue first, then inspect audio, subtitles, and material timing.
-
-### Step 6 - Review Checklist
-
-Ask the user or perform automated checks for:
-
-- draft opens normally;
-- all materials display;
-- shot order and duration follow the intended rhythm;
-- subtitles are readable and placed safely;
-- voiceover and picture are synchronized;
-- low-confidence matches are clearly reported;
-- copied files remain in the work folder;
-- final output path is reported.
-
-### Step 7 - Package as a Skill
-
-When the workflow has completed at least one acceptable manual run, offer to package it as a dedicated editing Skill. The Skill should include:
-
-- expected folder structure;
-- dependency checks;
-- reference analysis instructions;
-- matching rules;
-- missing-asset behavior;
-- voiceover and subtitle rules;
-- draft-generation checks;
-- test prompts covering ecommerce, marketing, montage, and non-fit high-end original video cases.
-
-## HyperFrames Video Workflow
-
-Use this section when the user wants Codex to create repeatable HTML-driven videos, animated explainers, article-to-video output, product promos, or CI-ready rendered MP4 files.
-
-### Route Selection
-
-Choose HyperFrames when:
-
-- the video can be expressed as HTML, CSS, JavaScript, subtitles, motion graphics, charts, screenshots, product pages, or interface simulations;
-- the user needs repeatable preview and render behavior;
-- the output should be an MP4 rather than an editable Jianying/CapCut draft;
-- the workflow benefits from slash-command Skills and project-level conventions.
-
-Choose the Jianying/CapCut route instead when the core job is replacing shots in a reference video with user-provided clips and continuing manual editing in a desktop editor.
-
-### Required Inputs
-
-Collect:
-
-- source material: script, article, PDF, README, CSV, raw talking-head video, screenshots, or product assets;
-- target duration, aspect ratio, platform, and resolution;
-- visual style: minimal, high-energy social, warm grain, Swiss grid, dark mode, luxury, or another concrete style;
-- key elements: title, subtitle treatment, lower third, logo, chart, screenshots, background video, and music;
-- voice/TTS provider if needed;
-- render quality: draft, standard, or high;
-- output path and review checkpoints.
-
-### Step 1 - Initialize and Check Environment
-
-Prefer a project initialized with HyperFrames tooling and related Skills. Before making the video:
-
-- confirm Codex is available;
-- confirm HyperFrames starts;
-- confirm FFmpeg and Chrome runtime are healthy through the HyperFrames diagnostic command when available;
-- run the project from a real folder with assets stored under `assets/`.
-
-### Step 2 - Build the Review Chain
-
-Use a staged review flow:
-
-1. Design: define purpose, audience, platform, duration, and style.
-2. Script: write or adapt narration and on-screen text.
-3. Storyboard: split the timeline into scenes or subtitle-aligned segments.
-4. Visual page: build an HTML storyboard or review page where the user can inspect each segment.
-5. Timeline preview: align animations to subtitles or scene timestamps.
-6. Render: create deterministic MP4 output only after preview approval.
-
-When source footage is a talking-head or tutorial, first generate a review page for cuts, pauses, retakes, and subtitle alignment. The user should approve the cut decisions before HTML scene work continues.
-
-### Step 3 - Prompt for Stable Output
-
-For a cold start, specify:
-
-- duration: exact seconds or scene count;
-- aspect ratio: 16:9, 9:16, 1:1, or explicit dimensions;
-- style and mood;
-- key assets and file paths;
-- subtitle style;
-- music and voice requirements;
-- final render target.
-
-For a warm start, combine research or summary with production: let Codex read the source, extract the structure, then produce the video plan and composition from that same material.
-
-Iterate with small, concrete changes after the first preview, such as changing title size, moving subtitles, adding a lower third, switching to dark mode, or replacing a background track.
-
-### Step 4 - Enforce the Composition Contract
-
-When writing or reviewing HyperFrames composition files, check:
-
-- the root element has composition id, width, and height metadata;
-- timed elements use `class="clip"` with start, duration, and track index metadata;
-- timelines are registered so the renderer can seek animations;
-- GSAP timelines are created paused when GSAP is used;
-- video elements are muted and audio is handled separately;
-- no unseeded randomness is used;
-- timeline construction is synchronous;
-- every asset path exists.
-
-Prefer default 1920x1080 at 30fps unless the user has a concrete delivery reason for heavier output.
-
-### Step 5 - Preview, Validate, and Render
-
-Use the development loop:
-
-```text
-init -> lint -> validate -> inspect -> preview -> render -> review
-```
-
-Interpret failures by location:
-
-- lint: structure or composition contract issue;
-- validate: runtime error, missing asset, contrast, or renderability issue;
-- inspect: internal scene, clip, or timeline structure;
-- preview: visual timing, layout, subtitles, and pacing;
-- render: final encoding and output file generation.
-
-Render draft quality for early iteration, standard for stakeholder review, and high only for final delivery.
-
-### Step 6 - Package as a Skill or CI Workflow
-
-When a HyperFrames workflow repeats, package:
-
-- project folder structure;
-- style vocabulary and brand defaults;
-- prompt starting forms;
-- composition contract checks;
-- preview and review checkpoints;
-- render command and output naming;
-- regression or CI expectations when deterministic rendering matters.
-
-Do not ask for React or Vue components as the core artifact. Ask for HyperFrames-compatible HTML composition unless the project already has a specific integration reason.
-
-## B - Boundaries
-
-Do not turn every task into a workflow. The article's logic is strongest when work is repetitive, multi-step, file-based, or commercially useful. Avoid workflow design when a direct answer, a quick edit, or a one-time draft is enough.
-
-Do not hide uncertainty. If input sources, accounts, file permissions, schedule, or notification target are unknown, mark them as assumptions or request the missing detail before creating recurring automation.
-
-Do not schedule a workflow until it has passed at least one manual run with acceptable output.
-
-For automated editing, do not promise boutique creative quality. Position the workflow as scalable production, not premium original filmmaking. Do not use unrelated material to force a complete timeline. Keep human review before publishing.
-
-For HyperFrames, do not promise it can cover media workflows that depend mainly on generated character performance or image-to-video shots. It is strongest when the video can be represented as browser-renderable scenes, motion graphics, captions, charts, screenshots, and interface simulations. Always keep preview validation before final render.
+- [workflow-patterns.md](references/workflow-patterns.md)：来源应用、父子路由、合同字段、打包与自动剪辑原则。
+- [video-workflows.md](references/video-workflows.md)：剪映/CapCut、HyperFrames、Remotion 的详细运行步骤与故障门。
+- `references/generative-video-production.md`：生成式资产的来源身份、设备语法、连续性和 QA。
 
 ## Audit
 
 - Distillation date: 2026-07-07
-- Source titles: 5分钟入门Codex，一个工作流在抖音赚了5W+; Codex自动化剪辑从0到1，开源我在抖音赚了5W+的剪辑工作流【万字长文】; Codex + HyperFrames 自动剪辑视频：深度技术解析与工程化最佳实践
-- Source authors: xilo2991; GeekCatX
-- Verification: V1 cross-domain examples present / V2 predicts new workflow setup tasks, automated editing runs, and HyperFrames rendering pipelines / V3 specific to Codex project, Skill, automation, Jianying/CapCut draft usage, and deterministic HTML video rendering
+- Verification: workflow contract、生产资料、Seedance 资产状态、风格锁、真实 Remotion starter 和可移植回归检查均有对应文件。

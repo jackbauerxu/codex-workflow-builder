@@ -1,0 +1,62 @@
+name: Verify production skill
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: examples/remotion-starter/package-lock.json
+
+      - name: Verify Skill metadata
+        run: node tests/repository-contract/check-skill-metadata.mjs
+
+      - name: Verify repository contract
+        run: bash tests/repository-contract/check-repository.sh
+
+      - name: Verify production knowledge contract
+        run: bash tests/production-skill-contract/focused-check.sh
+
+      - name: Validate test prompts
+        run: jq empty test-prompts.json
+
+      - name: Install starter dependencies
+        working-directory: examples/remotion-starter
+        run: npm ci
+
+      - name: Typecheck starter
+        working-directory: examples/remotion-starter
+        run: npm run typecheck
+
+      - name: Render still frame
+        working-directory: examples/remotion-starter
+        run: npm run render:still
+
+      - name: Render MP4 smoke artifact
+        working-directory: examples/remotion-starter
+        run: npm run render:smoke
+
+      - name: Verify render artifacts
+        working-directory: examples/remotion-starter
+        run: npm run verify:artifacts
+
+      - name: Upload render evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: remotion-starter-render
+          path: examples/remotion-starter/outputs/
+          retention-days: 7

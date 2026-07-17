@@ -86,4 +86,6 @@ forbid_text remotion/production-contract.md 'stock-analysis'
 forbid_text test-prompts.json '股票'
 forbid_text tests/production-skill-contract/contract-cases.json 'stock-analysis'
 
+bash "$root/tests/repository-contract/check-repository.sh"
+
 printf 'production-skill contract checks passed\n'

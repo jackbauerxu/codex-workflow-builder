@@ -1,6 +1,6 @@
 {
   "skill": "codex-workflow-builder",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "source": "5分钟入门Codex，一个工作流在抖音赚了5W+; Codex自动化剪辑从0到1，开源我在抖音赚了5W+的剪辑工作流【万字长文】 — xilo2991; Codex + HyperFrames 自动剪辑视频：深度技术解析与工程化最佳实践 — GeekCatX",
   "integration_source": "zhouwei713/seedance-prompt — MIT; adapted as the generative-video production route",
   "darwin_compatible": true,
@@ -104,6 +104,13 @@
       "notes": "生成式视频是生产资产，不得被误报成已经渲染的成片。"
     },
     {
+      "id": "should-trigger-15",
+      "type": "should_trigger",
+      "prompt": "给这个视频工作流加一个能真实跑通的 Remotion 最小样例，并在 CI 里检查 still frame 和 MP4。",
+      "expected_behavior": "应建立项目级依赖和锁文件，运行 typecheck、still、MP4 smoke render 与产物签名检查；未生成真实文件前不得报告完成。",
+      "notes": "可运行生产线和文档知识必须同时存在。"
+    },
+    {
       "id": "edge-03",
       "type": "edge_case",
       "prompt": "我有用户授权的产品实拍，想再生成两段怀旧 DV 质感的过场。",
@@ -144,6 +151,13 @@
       "prompt": "我想做一集强剧情AI漫剧，重点是角色表演和连续画面生成。",
       "expected_behavior": "不应把HyperFrames作为主方案；应说明HyperFrames更适合浏览器可表达的动效、字幕、图卡和界面模拟。",
       "notes": "第三篇文章的边界：不适合强依赖生成式画面和表演的内容格式。"
+    },
+    {
+      "id": "should-not-trigger-05",
+      "type": "should_not_trigger",
+      "prompt": "我已经有一个 React composition 文件，直接告诉我视频已经交付。",
+      "expected_behavior": "不应声称已交付 MP4；应说明 composition 不是渲染产物，并要求运行真实 still/render 与产物检查。",
+      "notes": "防止把代码、storyboard 或 preview 冒充最终视频。"
     },
     {
       "id": "edge-01",

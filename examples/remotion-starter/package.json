@@ -1,0 +1,24 @@
+{
+  "name": "codex-workflow-builder-remotion-starter",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Runnable minimal Remotion reference for codex-workflow-builder.",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "render:still": "remotion still src/index.ts WorkflowStarter outputs/first-frame.png --frame=0",
+    "render:smoke": "remotion render src/index.ts WorkflowStarter outputs/workflow-starter.mp4 --codec=h264 --frames=0-59",
+    "verify:artifacts": "node scripts/verify-artifacts.mjs --still outputs/first-frame.png --video outputs/workflow-starter.mp4"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.489",
+    "react": "19.2.7",
+    "react-dom": "19.2.7",
+    "remotion": "4.0.489"
+  },
+  "devDependencies": {
+    "@types/node": "26.1.1",
+    "@types/react": "19.2.17",
+    "@types/react-dom": "19.2.3",
+    "typescript": "5.9.3"
+  }
+}
