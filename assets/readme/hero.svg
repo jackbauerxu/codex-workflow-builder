@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 500" role="img" aria-labelledby="title desc">
+  <title id="title">Codex Workflow Builder</title>
+  <desc id="desc">A blueprint-style workflow diagram showing a repeatable task becoming a validated production contract.</desc>
+  <rect width="1200" height="500" rx="28" fill="#12152a"/>
+  <g stroke="#303b68" opacity=".6"><path d="M40 54h1120M40 94h1120M40 134h1120M40 174h1120M40 214h1120M40 254h1120M40 294h1120M40 334h1120M40 374h1120M40 414h1120"/><path d="M80 30v410M160 30v410M240 30v410M320 30v410M400 30v410M480 30v410M560 30v410M640 30v410M720 30v410M800 30v410M880 30v410M960 30v410M1040 30v410M1120 30v410"/></g>
+  <text x="60" y="86" font-family="ui-sans-serif,system-ui,sans-serif" font-size="13" fill="#8fe8db" letter-spacing="4">CODEX / REPEATABLE WORKFLOW DESIGN</text>
+  <text x="60" y="144" font-family="ui-sans-serif,system-ui,sans-serif" font-size="53" font-weight="700" fill="#f5f6ff" letter-spacing="-2">Workflow Builder</text>
+  <text x="62" y="177" font-family="ui-sans-serif,system-ui,sans-serif" font-size="15" fill="#abb7dc">Turn a fuzzy, recurring task into a contract a Skill can execute.</text>
+  <g transform="translate(64 232)" font-family="ui-sans-serif,system-ui,sans-serif">
+    <g><rect width="210" height="106" rx="14" fill="#1f2548" stroke="#5362a0"/><text x="20" y="34" font-size="12" letter-spacing="2" fill="#a9b5ff">INPUT</text><text x="20" y="76" font-family="Georgia,serif" font-size="24" fill="#f5f6ff">a repeat</text></g>
+    <g transform="translate(244)"><rect width="210" height="106" rx="14" fill="#24385a" stroke="#4f89a0"/><text x="20" y="34" font-size="12" letter-spacing="2" fill="#8fe8db">MAP</text><text x="20" y="76" font-family="Georgia,serif" font-size="24" fill="#f5f6ff">contract</text></g>
+    <g transform="translate(488)"><rect width="210" height="106" rx="14" fill="#29234a" stroke="#7c68ba"/><text x="20" y="34" font-size="12" letter-spacing="2" fill="#d3b6ff">BUILD</text><text x="20" y="76" font-family="Georgia,serif" font-size="24" fill="#f5f6ff">route</text></g>
+    <g transform="translate(732)"><rect width="210" height="106" rx="14" fill="#8c5cdb"/><text x="20" y="34" font-size="12" letter-spacing="2" fill="#f5f6ff">OUTPUT</text><text x="20" y="76" font-family="Georgia,serif" font-size="24" fill="#fff">Skill-ready</text></g>
+  </g>
+  <g fill="none" stroke="#8fe8db" stroke-width="2"><path d="M274 285h32M518 285h32M762 285h32"/><path d="m294 278 12 7-12 7M538 278l12 7-12 7M782 278l12 7-12 7"/></g>
+  <text x="62" y="423" font-family="ui-monospace,monospace" font-size="14" fill="#abb7dc">Goal · Inputs · Outputs · Steps · Checks · Stop conditions</text>
+</svg>

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 280" role="img" aria-labelledby="title desc">
+  <title id="title">Codex Workflow Builder production pipeline</title>
+  <desc id="desc">A production route from content evidence to storyboard, preview, render, and review.</desc>
+  <rect width="1200" height="280" rx="24" fill="#f5f6ff"/>
+  <g font-family="ui-sans-serif,system-ui,sans-serif">
+    <g transform="translate(42 58)"><rect width="196" height="140" rx="16" fill="#e3e9ff"/><text x="20" y="34" font-size="12" letter-spacing="2" fill="#5362a0">01</text><text x="20" y="76" font-family="Georgia,serif" font-size="24" fill="#161c39">Design</text><text x="20" y="108" font-size="13" fill="#536078">contract + inputs</text></g>
+    <g transform="translate(272 58)"><rect width="196" height="140" rx="16" fill="#ddf2ed"/><text x="20" y="34" font-size="12" letter-spacing="2" fill="#32796d">02</text><text x="20" y="76" font-family="Georgia,serif" font-size="24" fill="#161c39">Script</text><text x="20" y="108" font-size="13" fill="#536078">beats + prompts</text></g>
+    <g transform="translate(502 58)"><rect width="196" height="140" rx="16" fill="#eee3ff"/><text x="20" y="34" font-size="12" letter-spacing="2" fill="#7655a9">03</text><text x="20" y="76" font-family="Georgia,serif" font-size="24" fill="#161c39">Preview</text><text x="20" y="108" font-size="13" fill="#536078">frames + human review</text></g>
+    <g transform="translate(732 58)"><rect width="196" height="140" rx="16" fill="#ffe8d2"/><text x="20" y="34" font-size="12" letter-spacing="2" fill="#a36738">04</text><text x="20" y="76" font-family="Georgia,serif" font-size="24" fill="#161c39">Render</text><text x="20" y="108" font-size="13" fill="#536078">HyperFrames / Remotion</text></g>
+    <g transform="translate(962 58)"><rect width="196" height="140" rx="16" fill="#161c39"/><text x="20" y="34" font-size="12" letter-spacing="2" fill="#8fe8db">05</text><text x="20" y="76" font-family="Georgia,serif" font-size="24" fill="#f5f6ff">Validate</text><text x="20" y="108" font-size="13" fill="#abb7dc">artifacts + stop gates</text></g>
+  </g>
+  <g fill="none" stroke="#5362a0" stroke-width="2"><path d="M238 128h28M468 128h28M698 128h28M928 128h28"/><path d="m252 121 12 7-12 7M482 121l12 7-12 7M712 121l12 7-12 7M942 121l12 7-12 7"/></g>
+</svg>
