@@ -169,6 +169,8 @@ if (Array.isArray(transCfg.cut_points)) {
 const useTransitions = transEnabled && cuts.length > 0;
 const mainVideoDuration = useTransitions ? sourceDuration - cuts.length * transDuration : sourceDuration;
 
+const musicInputIndex = 1 + (endVideoPath ? 1 : 0);
+
 const filters = [];
 const boundaries = useTransitions ? [0, ...cuts, sourceDuration] : [0, sourceDuration];
 const segmentsCount = boundaries.length - 1;
@@ -266,7 +268,7 @@ if (musicPath) {
   const fadeOut = Number(music.fade_out ?? 0);
   const totalVideoDuration = mainVideoDuration + (endProbe ? endDuration : 0);
 
-  let chain = `[2:a]aformat=sample_rates=48000:channel_layouts=stereo`;
+  let chain = `[${musicInputIndex}:a]aformat=sample_rates=48000:channel_layouts=stereo`;
   if (duckDb !== undefined) chain += `,volume=${duckDb}dB`;
   if (Number.isFinite(fadeIn) && fadeIn > 0) chain += `,afade=t=in:st=0:d=${fmt(fadeIn)}`;
   if (Number.isFinite(fadeOut) && fadeOut > 0) {
@@ -282,7 +284,7 @@ if (musicPath) {
     filters.push(`[amain_mix][music_duck]amix=inputs=2:duration=first:dropout_transition=0[aout]`);
     audioLabel = 'aout';
   } else {
-    filters.push(`[music0]anull[aout]`);
+    filters.push(`[music0]atrim=duration=${fmt(totalVideoDuration)},asetpts=PTS-STARTPTS[aout]`);
     audioLabel = 'aout';
   }
 }

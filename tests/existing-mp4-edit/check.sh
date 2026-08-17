@@ -105,35 +105,35 @@ if font:
 requirements = [
     {
         "id": "R1",
-        "description": "在场景切点添加转场",
+        "requirement": "在场景切点添加转场",
         "status": "planned",
         "evidence": "",
         "assets": []
     },
     {
         "id": "R2",
-        "description": "对全片做暖色调色",
+        "requirement": "对全片做暖色调色",
         "status": "planned",
         "evidence": "",
         "assets": []
     },
     {
         "id": "R3",
-        "description": "配上一段感人的背景音乐",
+        "requirement": "配上一段感人的背景音乐",
         "status": "planned",
         "evidence": "",
         "assets": [music_file]
     },
     {
         "id": "R4",
-        "description": "添加动态数字人片尾并叠加文字",
+        "requirement": "添加动态数字人片尾并叠加文字",
         "status": "planned",
         "evidence": "",
         "assets": [endcard_video]
     },
     {
         "id": "R5",
-        "description": "导出最终成片",
+        "requirement": "导出最终成片",
         "status": "planned",
         "evidence": "",
         "assets": []

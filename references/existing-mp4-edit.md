@@ -70,6 +70,8 @@ node tools/probe-media.mjs <video> --out working/probe.json
 }
 ```
 
+end_card.text 的 drawtext 转义对半角单引号 ' 和 % 字符不完备，文字建议使用全角标点（中文文案不受影响）。
+
 跑：
 
 ```bash
