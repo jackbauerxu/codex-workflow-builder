@@ -3,9 +3,9 @@ set -euo pipefail
 
 root="$(cd "$(dirname "$0")/../.." && pwd)"
 require_file() { test -s "$root/$1"; }
-require_text() { rg -q --fixed-strings "$2" "$root/$1"; }
+require_text() { grep -qF -- "$2" "$root/$1"; }
 forbid_file() { test ! -e "$root/$1"; }
-forbid_text() { ! rg -q --fixed-strings "$2" "$root/$1"; }
+forbid_text() { ! grep -qF -- "$2" "$root/$1"; }
 
 # Production knowledge: actual reusable files, not a README-only promise.
 require_file scripts/opening.md
@@ -76,6 +76,21 @@ require_text remotion/production-contract.md 'generated_visuals'
 require_text prompts/generative-video.md 'seven sections'
 require_text references/generative-video-production.md 'Prompt QA Gate'
 require_text references/generative-video-production.md 'not evidence of a render'
+
+require_file tools/probe-media.mjs
+require_file tools/render-existing-mp4.mjs
+require_file tools/verify-delivery.mjs
+require_file tools/generate-asset.mjs
+require_file templates/edit-manifest.template.json
+require_file references/existing-mp4-edit.md
+require_file tests/existing-mp4-edit/check.sh
+require_text SKILL.md 'Requirement Ledger'
+require_text SKILL.md 'existing-mp4-edit.md'
+require_text README.md '已有 MP4 的增量编辑'
+require_text references/existing-mp4-edit.md 'Asset gate'
+require_text prompts/generative-video.md 'generate-asset.mjs'
+require_text templates/edit-manifest.template.json 'waived'
+
 forbid_file scripts/stock-analysis.md
 forbid_file prompts/stock-analysis.md
 forbid_file examples/stock-analysis.md

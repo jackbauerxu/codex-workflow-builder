@@ -26,6 +26,11 @@
       "id": "P005",
       "prompt": "用 Seedance 做一段 12 秒的真实手机随拍 B-roll，补进这个产品视频。",
       "expect": "selects the generative-video asset route, records a source identity and an authorized/generated asset status, uses the seven-section prompt form, and treats the output as planned until a real render exists"
+    },
+    {
+      "id": "P006",
+      "prompt": "这是我粗剪导出的 mp4，帮我在切点加转场、调色润色、配上感人的音乐，最后加一页数字人奔跑的片尾，文字用思源黑体写“向世界出发，向未来奔跑”。",
+      "expect": "routes to existing-mp4-edit, creates a requirement ledger with one entry per request item, probes scene cuts, gates on music file, motion end-card asset and CJK font, refuses static-image substitution, and reports every item as implemented, blocked, or user-waived — never silently dropped"
     }
   ]
 }

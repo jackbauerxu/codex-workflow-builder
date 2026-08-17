@@ -33,6 +33,17 @@ jobs:
       - name: Validate test prompts
         run: jq empty test-prompts.json
 
+      - name: Install ffmpeg
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg
+
+      - name: Verify existing-mp4-edit toolchain
+        run: |
+          node --check tools/probe-media.mjs
+          node --check tools/render-existing-mp4.mjs
+          node --check tools/verify-delivery.mjs
+          node --check tools/generate-asset.mjs
+          bash tests/existing-mp4-edit/check.sh
+
       - name: Install starter dependencies
         working-directory: examples/remotion-starter
         run: npm ci

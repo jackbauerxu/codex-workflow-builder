@@ -4,7 +4,7 @@ set -euo pipefail
 root="$(cd "$(dirname "$0")/../.." && pwd)"
 
 require_file() { test -s "$root/$1"; }
-require_text() { rg -q --fixed-strings "$2" "$root/$1"; }
+require_text() { grep -qF -- "$2" "$root/$1"; }
 
 for path in \
   LICENSE \

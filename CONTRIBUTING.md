@@ -12,11 +12,14 @@
 
 ## 本地验证
 
+`bash tests/existing-mp4-edit/check.sh` 需要系统安装 ffmpeg；其余命令同样需要 Node.js 与 npm。
+
 ```bash
 node tests/repository-contract/check-skill-metadata.mjs
 bash tests/repository-contract/check-repository.sh
 bash tests/production-skill-contract/focused-check.sh
 jq empty test-prompts.json
+bash tests/existing-mp4-edit/check.sh
 cd examples/remotion-starter
 npm ci
 npm run typecheck
