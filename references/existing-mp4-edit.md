@@ -47,18 +47,24 @@ node tools/probe-media.mjs <video> --out working/probe.json
     "source": "<原片路径>",
     "output": "<输出路径>",
     "transitions": {
-      "cut_points": ["00:00:05.200", "00:00:12.000"],
-      "style": "crossfade"
+      "enabled": true,
+      "duration": 0.5,
+      "cut_points": [4.0, 7.8]
     },
     "color": {
-      "preset": "cinematic"
+      "preset": "warm"
     },
     "music": {
-      "file": "<音乐路径>",
-      "mix": "duck_to_speech"
+      "file": "assets/music.mp3",
+      "fade_in": 1,
+      "fade_out": 2,
+      "duck_db": -15
     },
     "end_card": {
-      "asset": "<动态视频路径>"
+      "video": "assets/endcard.mp4",
+      "text": "向世界出发，向未来奔跑",
+      "font_file": "/path/SourceHanSansSC-Bold.otf",
+      "text_fade_in": 0.5
     }
   }
 }
