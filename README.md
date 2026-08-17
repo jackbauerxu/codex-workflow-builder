@@ -86,6 +86,26 @@
 
 如果某个镜头没有合适素材，Skill 会要求标记为 `missing_asset`，并告诉你应该补充什么类型的素材，而不是为了填满时间线强行选择不相关内容。
 
+### 已有 MP4 的增量编辑
+
+当用户拿的是已经导出成 MP4 的粗剪或成片，只要求增量修改——转场、调色、配乐、片头/片尾、叠字——走这条路线，不要当成从零生成或从素材库重组。
+
+五步流程：
+
+1. **建账**：复制 `templates/edit-manifest.template.json`，逐项回显并确认需求，状态只用 `planned | implemented | blocked | waived`。
+2. **探测**：`node tools/probe-media.mjs <video> --out working/probe.json`，拿分辨率、时长、音轨、场景切点。
+3. **资产闸**：逐项收音乐、动态片尾、生成式资产、中文字体；缺什么标 `blocked`，不静默跳过。
+4. **渲染**：填 `edit_plan` 后运行 `node tools/render-existing-mp4.mjs <manifest>`，硬闸带病拒渲。
+5. **验收**：`node tools/verify-delivery.mjs <manifest>` 全绿后人工预览确认情绪、节奏、音乐卡点。
+
+三条红线：
+
+- 需求不静默消失：任何未完成项都要有 `blocked` 原因或 `waived` 记录。
+- 静态图不顶动态资产：要求动态片尾时，真 video 流是硬门槛。
+- 输出必须真实变化：输出与原片 sha256 相同即失败。
+
+工具三件套：`tools/probe-media.mjs`、`tools/render-existing-mp4.mjs`、`tools/verify-delivery.mjs`。账本模板：`templates/edit-manifest.template.json`。
+
 ### 3. Codex + HyperFrames 视频生产流程
 
 适用于文章转视频、PDF 转视频、README 讲解视频、产品介绍、信息图卡、字幕动效、界面演示、教程类视频。

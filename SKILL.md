@@ -35,7 +35,7 @@ description: Use when the user wants to turn a fuzzy recurring computer task, co
 - If blocked:
 ```
 
-视频任务按真实画面来源选择路线：参考视频剪映/CapCut 草稿、HyperFrames HTML 渲染、Remotion 日更生产线，或受控的生成式视频资产路线。详细路线操作见 [video-workflows.md](references/video-workflows.md)。
+视频任务按真实画面来源选择路线：参考视频剪映/CapCut 草稿、HyperFrames HTML 渲染、Remotion 日更生产线、受控的生成式视频资产路线，或**已有 MP4 增量编辑**（用户拿着导出成片要求转场/调色/配乐/片尾时必走此路线，见 [existing-mp4-edit.md](references/existing-mp4-edit.md)，不得落入从零生成的路线）。详细路线操作见 [video-workflows.md](references/video-workflows.md)。
 
 ## Production System for Video Work
 
@@ -75,6 +75,7 @@ production:
 | 项目脚本与题材模板 | `scripts/README.md` 加一个最接近的项目模板 |
 | TikTok、AI 演示、产品、开箱、新闻、B-roll | 对应的 `prompts/*.md` |
 | Seedance 或其他生成式视频资产 | `prompts/generative-video.md`, `references/generative-video-production.md`, `examples/generative-video-sequence.md` |
+| 已有 MP4 的增量编辑（转场/调色/配乐/片尾） | `references/existing-mp4-edit.md`, `templates/edit-manifest.template.json` |
 | 镜头、构图、动效 | `references/shot-library.md`, `references/composition-examples.md`, `references/motion-examples.md` |
 | Remotion 交接合同 | `remotion/production-contract.md` |
 

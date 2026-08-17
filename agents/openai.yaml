@@ -1,6 +1,6 @@
 interface:
   display_name: "Codex Workflow Builder"
   short_description: "把任务和视频生产做成可复用系统"
-  default_prompt: "Use $codex-workflow-builder to turn my repeated task or video pipeline into a reusable production system with a content format, style preset, scripts, shots, references, quality gates, and a concrete project workflow. When a generated asset is requested, include Source Identity, a Continuity Ledger for sequences, honest asset status, and real render verification."
+  default_prompt: "Use $codex-workflow-builder to turn my repeated task or video pipeline into a reusable production system with a content format, style preset, scripts, shots, references, quality gates, and a concrete project workflow. When a generated asset is requested, include Source Identity, a Continuity Ledger for sequences, honest asset status, and real render verification. When the user brings an existing exported MP4 for incremental editing (transitions, grading, music, end card), route to the existing-mp4-edit workflow with a requirement ledger, never silently drop a requirement, and never substitute a static image for a requested motion asset."
 policy:
   allow_implicit_invocation: true
