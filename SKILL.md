@@ -135,6 +135,17 @@ production:
 
 触发必须可执行，例如“用户把 10 个产品片段放入 `/inputs/raw-clips`”，而不是“制作视频时”。
 
+## Requirement Ledger
+
+用户请求包含多项需求时（无论是否视频任务），第一步是把需求逐条拆入账本，再开始执行：
+
+1. 复制 `templates/edit-manifest.template.json` 建账，每项需求一条 `R` 记录，回显给用户确认理解无误。
+2. 执行中每完成/受阻一项，立即更新该项 `status` 与 `evidence`。
+3. 状态只有四种：`planned`（未动）、`implemented`（已完成且有证据）、`blocked`（做不到，必须写明缺什么）、`waived`（用户明确豁免）。
+4. 交付报告必须逐项对照账本输出。存在任何 `planned` 或 `blocked` 项而未向用户说明时，禁止宣称任务完成；`waived` 只能来自用户明确表态，Codex 不得自行豁免。
+
+账本是防"静默降级"的硬闸：需求不会因为做不到而消失，只会变成一条明确的 `blocked` 记录。
+
 ## E - Execution
 
 ### 1. Identify Workflow Worthiness
@@ -175,12 +186,15 @@ npm ci -> npm run typecheck -> npm run render:still -> npm run render:smoke -> n
 
 至少一次人工验收通过后，选择可复用提示词、项目 runbook、Skill 或定时任务。报告工作流名、文件位置、下次运行方式、用户首先要看的产物和仍需人工判断的部分。不要在依赖未安装、预览失败或真实产物缺失时声称视频完成。
 
+多项需求任务的交付报告必须逐项引用 Requirement Ledger 的最终状态。
+
 ## Quality Gates and boundaries
 
 - 输入：必需文件、字段、来源和权利存在。
 - 输出：交付物格式、路径、时长、分辨率和可解析性符合承诺。
 - 内容：事实有来源，标题/字幕在安全区，镜头与叙事匹配，风格只有一个预设。
 - 生产：低置信度素材标记 `missing_asset`；生成资产保留状态、权利和真实路径。
+- 账本：多项需求必有 edit-manifest 账本；`planned`/`blocked` 未说明即交付视为失败。
 - Review：报告变更、产物、失败门和用户必须做的判断。
 
 不要为单次问答、按钮位置、没有目标/输出标准的任务或强依赖真实表演和复杂情绪的高级原创大片设计工作流。自动化编辑定位是可规模化生产，不承诺精品创作；HyperFrames 强项是浏览器可表达的字幕、图表、截图、UI 和动效，而不是生成角色表演。

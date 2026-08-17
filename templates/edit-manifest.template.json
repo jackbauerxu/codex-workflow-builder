@@ -1,0 +1,17 @@
+{
+  "$comment": "每次多项需求请求复制此模板建账；每项需求一条 R 记录。waived 只能由用户明确豁免产生，Codex 不得自行设置。校验工具为 tools/verify-delivery.mjs。",
+  "request_summary": "",
+  "source_video": "",
+  "output_video": "",
+  "requirements": [
+    {
+      "id": "R1",
+      "requirement": "",
+      "status": "planned",
+      "evidence": "",
+      "timecodes": [],
+      "assets": []
+    }
+  ],
+  "statuses_allowed": ["planned", "implemented", "blocked", "waived"]
+}
