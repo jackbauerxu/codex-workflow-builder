@@ -68,3 +68,7 @@ clips:
 - `status`、权利状态和真实文件路径是否诚实记录？
 
 提示词、故事板或模型返回的缩略图 **not evidence of a render**。只有真实模型输出被保存、路径存在、并通过 still-frame/预览检查后，才能把 `status` 从 `planned` 更新为 `generated` 或 `accepted`。
+
+## Executor handoff
+
+通过 QA Gate 的定稿 prompt 可交给 `tools/generate-asset.mjs` 渲染（用法与环境变量见 `prompts/generative-video.md` 的"执行器"一节）。执行器只负责 `not_rendered → generated` 这一步并回写真实 `output_path`；Continuity Ledger 的锚点核对、still-frame 检查和 `accepted` 升级仍由人工完成。渲染失败或未配置密钥时，资产状态保持不变，账目里不得出现没有真实文件路径的 `generated`。

@@ -39,3 +39,14 @@ generated_asset:
 - 生成画面不能伪造客户结果、产品界面、新闻事实、人物身份或未授权素材。它只能解释旁白，不能充当事实来源。
 - 多段生成前必须读取 `references/generative-video-production.md` 的 Continuity Ledger；每段输出首帧锚点、末帧锚点和交接动作。
 - 交付时回写 `status` 与真实 `output_path`。模型没有实际运行时，交付状态是 `not_rendered`。
+
+## 执行器：从 not_rendered 到 generated
+
+定稿 prompt 存入资产记录 JSON 后，可用仓库自带执行器真实渲染：
+
+    node tools/generate-asset.mjs <asset-record.json>
+
+- 需要环境变量 `ARK_API_KEY`（火山方舟）；未配置时执行器明确报告"执行层未接通"并保持 `not_rendered`，不静默。
+- 成功后执行器回写 `status: generated`、`output_path`、`generated_at`、`ark_task_id`。
+- `generated → accepted` 仍是人工 QA：逐帧/静帧检查通过后手动改状态。执行器永不写 `accepted`。
+- 用户不接受生成式资产、或走其他模型时，本节不适用，维持人工交接。
