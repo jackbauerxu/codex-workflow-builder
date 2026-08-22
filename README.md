@@ -1,10 +1,31 @@
 # Codex Workflow Builder
 
-![Codex Workflow Builder runnable Remotion frame](examples/remotion-starter/outputs/first-frame.png)
+![Codex Workflow Builder：把重复任务变成可验证工作流](assets/readme/hero.svg)
 
 把重复任务、短视频剪辑流程、HyperFrames / Remotion 视频生产管线，整理成 Codex 可以反复执行的 Skill。
 
+![01 · FIRST IMPRESSION：Workflow Builder 生产系统](assets/readme/section-why.svg)
+
+## 30 秒看懂
+
+它先判断任务是否值得工作流化，再把模糊需求整理成 `Workflow Contract`，最后才选择剪映 / CapCut、HyperFrames、Remotion 或父子 Skill 路线。
+
+![Production 路线：设计、脚本、预览、渲染、验证](assets/readme/workflow.svg)
+
+![Workflow Builder 项目对象展示：合同、镜头库和验证门](assets/readme/showcase.svg)
+
+| 输入 | 中间产物 | 交付门 |
+| --- | --- | --- |
+| 重复发生的任务 | Goal / Inputs / Outputs / Steps | 人工检查点与停止条件 |
+| 参考视频与素材库 | recipe、镜头、匹配和缺口 | 低置信度素材留空 |
+| 文章、PDF、README | 脚本、分镜、HTML、时间线 | still frame、路径和渲染校验 |
+| 已验证栏目 | 父级合同 + 子级生产配置 | 可复用 Skill 或自动任务 |
+
+默认风格是可审查的静态预览和项目原生资产；没有真实工具调用时，README、brief 或 prompt 不会被描述成已经交付的视频。
+
 这个仓库来自三篇 X 长文的方法论蒸馏，最终沉淀为一个可安装的 Codex Skill：`codex-workflow-builder`。它不是普通教程摘要，而是一个面向真实执行的工作流设计器：当你有一个模糊但反复发生的任务时，它会帮你把目标、输入、输出、目录、步骤、检查点、封装方式全部整理清楚。
+
+![03 · USE THE SYSTEM：从模糊需求到可复用产物](assets/readme/section-use.svg)
 
 ## 来源文章
 
@@ -27,6 +48,8 @@
 `codex-workflow-builder` 的作用，就是把这些「说不清、但经常做」的任务，拆成 Codex 能稳定执行的工作流。
 
 ## 核心功能
+
+> 下面的四条路线共享同一套输入、输出、检查点和停止条件；它们不是互相覆盖的“万能自动化”。
 
 ### 1. 重复任务工作流设计
 
